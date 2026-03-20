@@ -1,390 +1,387 @@
 <!DOCTYPE html>
 <html lang="en"> 
-
-<style>
-  body {
-    background: radial-gradient(circle at 50% 0%, #0b1224 0%, #050816 60%);
-    overflow-x: hidden;
-    font-family: 'Inter', sans-serif;
-  }
-
-  body::before {
-    content: "";
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background-image:
-      linear-gradient(rgba(168,85,247,0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(34,211,238,0.05) 1px, transparent 1px);
-    background-size: 70px 70px;
-    z-index: -1;
-    animation: gridMove 20s linear infinite;
-  }
-
-  body::after {
-    content: "";
-    position: fixed;
-    top: -200px;
-    left: -200px;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(168,85,247,0.15), transparent 70%);
-    animation: floatLight 12s ease-in-out infinite;
-    z-index: -1;
-  }
-
-  @keyframes gridMove {
-    from { background-position: 0 0, 0 0; }
-    to { background-position: 70px 70px, 70px 70px; }
-  }
-
-  @keyframes floatLight {
-    0%,100% { transform: translate(0,0); }
-    50% { transform: translate(200px,150px); }
-  }
-
-  .glow-text {
-    animation: pulseGlow 2.5s infinite alternate;
-  }
-
-  @keyframes pulseGlow {
-    from { text-shadow: 0 0 10px #22D3EE, 0 0 20px #A855F7; }
-    to { text-shadow: 0 0 20px #22D3EE, 0 0 40px #A855F7; }
-  }
-
-  .glow-box {
-    background: rgba(11,18,36,0.9);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(168,85,247,0.2);
-    box-shadow: 0 0 20px rgba(168,85,247,0.3);
-    transition: all 0.3s ease;
-  }
-
-  .glow-box:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 0 30px rgba(34,211,238,0.5);
-    border: 1px solid rgba(34,211,238,0.6);
-  }
-
-  .logo-glow {
-    filter: drop-shadow(0 0 20px rgba(168,85,247,0.8))
-            drop-shadow(0 0 40px rgba(34,211,238,0.5));
-    animation: floatLogo 4s ease-in-out infinite;
-  }
-
-  @keyframes floatLogo {
-    0%,100% { transform: translateY(0px); }
-    50% { transform: translateY(-8px); }
-  }
-
-  .gradient-text {
-    background: linear-gradient(90deg, #22D3EE, #A855F7);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .glass-card {
-    background: rgba(11,18,36,0.6);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(168,85,247,0.3);
-    box-shadow: 0 0 30px rgba(34,211,238,0.15);
-  }
-
-  .glow-button {
-    background: linear-gradient(90deg, #22D3EE, #A855F7);
-    animation: pulseBtn 2s infinite alternate;
-  }
-
-  @keyframes pulseBtn {
-    from { box-shadow: 0 0 10px #22D3EE; }
-    to { box-shadow: 0 0 25px #A855F7; }
-  }
-
-  .divider-line {
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #22D3EE, #A855F7, transparent);
-    margin: 60px auto;
-    width: 80%;
-  }
-
-  .status-bar {
-    background: rgba(11,18,36,0.95);
-    border-bottom: 1px solid rgba(168,85,247,0.3);
-    font-size: 13px;
-  }
-
-  .premium-card {
-    position: relative;
-    border-radius: 16px;
-    overflow: hidden;
-  }
-
-  .premium-card::before {
-    content: "";
-    position: absolute;
-    inset: -2px;
-    background: linear-gradient(90deg,#22D3EE,#A855F7,#22D3EE);
-    background-size: 300% 300%;
-    animation: borderFlow 4s linear infinite;
-    z-index: -1;
-  }
-
-  @keyframes borderFlow {
-    0% { background-position: 0% }
-    100% { background-position: 300% }
-  }
-
-  /* NEW ADDITION */
-  @keyframes marquee {
-    0% { transform: translateX(100%) }
-    100% { transform: translateX(-100%) }
-  }
-
-  .animate-marquee {
-    display: inline-block;
-    animation: marquee 25s linear infinite;
-  }
-
-</style>
-
 <head>
   <meta charset="UTF-8">
   <title>ZAcademy AI XAUUSD Trading System</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* =========================================
+       CUSTOM SCROLLBAR & LENIS
+    ========================================= */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #050816; }
+    ::-webkit-scrollbar-thumb { background: #22D3EE; border-radius: 10px; }
+    html.lenis, html.lenis body { height: auto; width: 100vw; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+
+    /* =========================================
+       BASE STYLES & CUSTOM CURSOR
+    ========================================= */
+    body {
+      background-color: #050816;
+      overflow-x: hidden;
+      font-family: 'Sora', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      cursor: none; 
+      color: #fff;
+    }
+
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    .cursor-dot, .cursor-outline {
+      position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
+      border-radius: 50%; z-index: 9999; pointer-events: none;
+    }
+    .cursor-dot { width: 6px; height: 6px; background-color: #22D3EE; box-shadow: 0 0 10px #22D3EE; }
+    .cursor-outline {
+      width: 40px; height: 40px; border: 1px solid rgba(168, 85, 247, 0.6);
+      transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
+    }
+
+    /* =========================================
+       CREATIVE BACKGROUND: GRID & ORBS
+    ========================================= */
+    .bg-grid {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background-size: 50px 50px;
+      background-image: 
+        linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+      z-index: -2;
+      animation: moveGrid 20s linear infinite;
+    }
+    @keyframes moveGrid {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(50px); }
+    }
+
+    .bg-orb { position: absolute; border-radius: 50%; filter: blur(120px); z-index: -1; opacity: 0.3; }
+    .orb-1 { width: 60vw; height: 60vw; background: #22D3EE; top: -10%; left: -20%; }
+    .orb-2 { width: 50vw; height: 50vw; background: #A855F7; top: 40%; right: -20%; }
+    .orb-3 { width: 70vw; height: 70vw; background: #22D3EE; bottom: -20%; left: 20%; }
+
+    /* =========================================
+       TYPOGRAPHY & GLOW
+    ========================================= */
+    h1, h2, h3 { letter-spacing: -0.03em; }
+    p { line-height: 1.8; }
+
+    .hero-subtext {
+      font-size: 1.15rem; font-weight: 400; color: rgba(255,255,255,0.7);
+      text-shadow: 0 0 20px rgba(34,211,238,0.2);
+    }
+
+    .text-gray-400 { color: #8e9bb0 !important; font-weight: 300; }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #fff 0%, #22D3EE 50%, #A855F7 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      animation: shineGradient 4s linear infinite;
+    }
+    @keyframes shineGradient { to { background-position: 200% center; } }
+
+    /* =========================================
+       CARDS & CONTAINERS (GLASSMORPHISM PRO)
+    ========================================= */
+    .glass-card, .glow-box {
+      background: rgba(11,18,36,0.4); 
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      border-left: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative; overflow: hidden;
+    }
+
+    /* Gleam Effect on Hover */
+    .glass-card::after, .glow-box::after {
+      content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+      transform: skewX(-20deg); transition: left 0.7s ease; z-index: 1; pointer-events: none;
+    }
+    .glass-card:hover::after, .glow-box:hover::after { left: 200%; }
+
+    .glass-card:hover, .glow-box:hover {
+      transform: translateY(-8px);
+      border-color: rgba(34,211,238,0.3);
+      box-shadow: 0 15px 40px rgba(34,211,238,0.15);
+    }
+
+    /* Premium Pro Card Styling */
+    .premium-card { position: relative; border-radius: 16px; background: rgba(10,5,25,0.8); }
+    .premium-card::before {
+      content: ""; position: absolute; inset: -2px; border-radius: 18px;
+      background: linear-gradient(135deg, #22D3EE, #A855F7, #22D3EE);
+      background-size: 300% 300%; animation: borderFlow 4s linear infinite; z-index: -1;
+    }
+    @keyframes borderFlow { 0% { background-position: 0% } 100% { background-position: 300% } }
+
+    /* =========================================
+       BUTTONS
+    ========================================= */
+    .glow-button {
+      background: linear-gradient(90deg, #22D3EE, #A855F7);
+      background-size: 200% auto;
+      border: none; position: relative; overflow: hidden; z-index: 1;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .glow-button:hover {
+      transform: scale(1.05); box-shadow: 0 0 30px rgba(168,85,247,0.6);
+      animation: shineGradient 2s linear infinite;
+    }
+
+    /* =========================================
+       MISC DETAILS
+    ========================================= */
+    .divider-line {
+      height: 1px; background: linear-gradient(90deg, transparent, rgba(34,211,238,0.5), rgba(168,85,247,0.5), transparent);
+      margin: 80px auto; width: 70%; position: relative;
+    }
+    .divider-line::after {
+      content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 10px; height: 10px; background: #050816; border: 2px solid #22D3EE; border-radius: 50%;
+    }
+
+    .status-bar {
+      background: rgba(5,8,22,0.8); backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      position: fixed; width: 100%; top: 0; z-index: 100;
+    }
+
+    .terminal-box {
+      background: #02040a; border: 1px solid rgba(34,211,238,0.2);
+      border-left: 4px solid #22D3EE; font-family: 'JetBrains Mono', monospace;
+    }
+
+    .gsap-reveal { opacity: 0; visibility: hidden; }
+    
+    /* Skewed Badge */
+    .badge-skew {
+      transform: skewX(-10deg); display: inline-block;
+    }
+    .badge-skew span {
+      transform: skewX(10deg); display: block;
+    }
+  </style>
 </head>
 
-<body class="bg-darkbg text-white font-sans">
+<body>
 
-<!-- STATUS BAR -->
-<div class="status-bar py-2 text-center">
-🟢 AI Engine: ACTIVE | 📡 Market Feed: Connected | 🧠 Model Confidence: Stable | ⚡ Session Mode: Live
+<div class="cursor-dot"></div>
+<div class="cursor-outline"></div>
+
+<div class="bg-grid"></div>
+<div class="bg-orb orb-1 parallax-orb" data-speed="0.08"></div>
+<div class="bg-orb orb-2 parallax-orb" data-speed="-0.05"></div>
+<div class="bg-orb orb-3 parallax-orb" data-speed="0.06"></div>
+
+<div class="status-bar py-3">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-xs tracking-widest text-white/60 px-6 font-mono uppercase">
+    <div class="flex items-center gap-3 mb-2 md:mb-0">
+      <span class="w-2 h-2 bg-[#22D3EE] rounded-full animate-ping absolute"></span>
+      <span class="w-2 h-2 bg-[#22D3EE] rounded-full relative"></span>
+      <span class="text-[#22D3EE] font-bold">System Online</span>
+    </div>
+    <div class="flex items-center gap-6">
+      <span class="hidden md:inline">📡 Feed: Connected</span>
+      <span>🧠 Stability: 97.4%</span>
+      <span>⚡ Mode: London Volatility</span>
+    </div>
+  </div>
 </div>
 
-<!-- HERO -->
-<section class="min-h-screen flex items-center justify-center px-6">
-  <div class="max-w-4xl text-center">
+<section class="min-h-screen flex items-center justify-center px-6 relative z-10 pt-20">
+  <div class="max-w-5xl text-center">
 
-    <p class="text-sm text-primary mb-4 tracking-widest">
-      ⚡ LIVE AI ENGINE RUNNING — REAL-TIME DATA ACTIVE
+    <div class="gsap-hero mb-8">
+      <div class="badge-skew bg-[#22D3EE]/10 border border-[#22D3EE]/30 px-5 py-2 rounded">
+        <span class="text-xs tracking-[0.3em] text-[#22D3EE] font-bold uppercase">Quant Engine v4.2</span>
+      </div>
+    </div>
+
+    <img src="/Xauusd---ai/logo.png" alt="ZAcademy Logo" class="mx-auto mb-8 w-32 filter drop-shadow-[0_0_15px_rgba(168,85,247,0.5)] gsap-hero">
+
+    <h1 class="text-6xl md:text-8xl font-extrabold mb-6 gradient-text gsap-hero tracking-tighter leading-none">
+      ZACADEMY AI<br>TRADING
+    </h1>
+
+    <p class="hero-subtext mb-8 max-w-2xl mx-auto gsap-hero">
+      Engineered for absolute discipline. Combining structured risk architecture with a dynamic multi-timeframe algorithm.
     </p>
 
-    <p class="text-xs text-primary mb-4">
-🔥 <span id="userCount">128</span> Traders Using ZAcademy AI Now
-    </p>
+    <div class="gsap-hero flex flex-wrap justify-center gap-4 mb-10 text-xs font-mono text-[#A855F7] bg-[#A855F7]/10 py-3 px-6 rounded-full border border-[#A855F7]/20 w-fit mx-auto">
+      <span>● No Martingale</span>
+      <span class="text-white/30">|</span>
+      <span>● 1% Risk Model</span>
+      <span class="text-white/30">|</span>
+      <span>● Institutional Logic</span>
+    </div>
 
-    <img src="/Xauusd---ai/logo.png" class="mx-auto mb-8 w-40 logo-glow">
-
-    <h1 class="text-4xl md:text-6xl font-bold mb-6 gradient-text">
-ZACADEMY AI Trading
-</h1>
-
-    <p class="text-gray-400 text-lg md:text-xl mb-8">
-Designed for disciplined capital growth.
-Structured risk framework • Multi-timeframe model • Data-driven execution
-</p>
-
-    <p class="text-sm text-white/60 tracking-widest mb-4">
-BUILT FOR SERIOUS TRADERS — NOT SIGNAL CHASERS
-</p>
-
-    <div class="mt-6 text-sm text-white/60 space-y-2">
-  <p>✔ Transparent performance tracking since 2024</p>
-  <p>✔ Structured 1% risk per trade — no martingale</p>
-  <p>✔ Designed for disciplined capital growth</p>
-</div>
-
-        <div class="flex flex-col md:flex-row justify-center items-center gap-6 mt-10">
-
+    <div class="flex flex-col md:flex-row justify-center items-center gap-6 gsap-hero">
       <a href="https://t.me/ZAcademysignalv2_bot" target="_blank"
-         class="glow-button text-black px-8 py-3 rounded-lg font-semibold text-center">
+         class="glow-button text-black px-10 py-4 rounded-xl font-bold text-center uppercase tracking-widest text-sm w-full md:w-auto">
          Launch AI Engine
       </a>
-
       <a href="#pricing"
-         class="border border-white/40 px-8 py-3 rounded-lg hover:bg-white hover:text-black transition text-center">
-         Upgrade to Pro
+         class="border border-white/20 px-10 py-4 rounded-xl hover:bg-white hover:text-black transition-colors duration-300 text-center uppercase tracking-widest text-sm font-semibold w-full md:w-auto backdrop-blur-sm">
+         View Pro Architecture
       </a>
-
     </div>
 
-  </div>  
-
-</section>
-
-<div class="divider-line"></div>
-
-  <!-- COMMUNITY -->
-<section class="py-20 px-6 bg-cardbg">
-  <div class="max-w-5xl mx-auto text-center">
-
-    <h2 class="text-3xl font-bold mb-10 gradient-text">
-      Trusted Performance Metrics
-    </h2>
+    <p class="text-xs text-gray-500 mt-12 font-mono tracking-widest uppercase gsap-hero">
+      🔥 Active Traders: <span id="userCount" class="text-white font-bold text-sm">128</span>
     </p>
 
-    <div class="grid md:grid-cols-3 gap-8">
+  </div>  
+</section>
 
-      <div class="glow-box p-6 rounded-xl">
-        <h3 class="text-2xl font-bold text-primary">1,500+</h3>
-        <p class="text-gray-400">Active Telegram Members</p>
+<div class="divider-line gsap-reveal"></div>
+
+<section class="py-20 px-6 relative z-10">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid md:grid-cols-3 gap-6">
+      
+      <div class="glass-card p-10 rounded-2xl gsap-reveal text-center group">
+        <p class="text-gray-400 font-mono text-xs uppercase tracking-widest mb-4">Telegram Community</p>
+        <h3 class="text-5xl font-bold text-white group-hover:text-[#22D3EE] transition-colors">1,500+</h3>
       </div>
 
-      <div class="glow-box p-6 rounded-xl">
-        <h3 class="text-2xl font-bold text-green-400">74%</h3>
-        <p class="text-gray-400">Average Win Rate</p>
+      <div class="glass-card p-10 rounded-2xl gsap-reveal text-center group">
+        <p class="text-gray-400 font-mono text-xs uppercase tracking-widest mb-4">Average Win Rate</p>
+        <h3 class="text-5xl font-bold text-white group-hover:text-green-400 transition-colors">74%</h3>
       </div>
 
-      <div class="glow-box p-6 rounded-xl">
-        <h3 class="text-2xl font-bold text-yellow-400">17%</h3>
-        <p class="text-gray-400">Max Historical Drawdown</p>
+      <div class="glass-card p-10 rounded-2xl gsap-reveal text-center group">
+        <p class="text-gray-400 font-mono text-xs uppercase tracking-widest mb-4">Max Drawdown</p>
+        <h3 class="text-5xl font-bold text-white group-hover:text-yellow-400 transition-colors">17%</h3>
       </div>
 
     </div>
-
-    <div class="mt-12">
-      <a href="https://t.me/ZAcademysignalv2_bot" target="_blank"
-         class="glow-button text-black px-10 py-4 rounded-lg font-semibold">
-         Join Telegram Now
-      </a>
-    </div>
-
   </div>
 </section>
-<!-- WHY ZACADEMY -->
-<section class="py-20 px-6">
-  <div class="max-w-6xl mx-auto text-center">
+
+<section class="py-24 px-6 relative z-10 bg-black/30 border-y border-white/5">
+  <div class="max-w-7xl mx-auto">
     
-    <h2 class="text-3xl font-bold mb-12 gradient-text">
-     Inside The Engine
-    </h2>
+    <div class="flex flex-col md:flex-row justify-between items-end mb-16 gsap-reveal">
+      <div>
+        <p class="text-[#22D3EE] font-mono text-sm tracking-widest uppercase mb-2">// Architecture</p>
+        <h2 class="text-4xl md:text-5xl font-bold text-white">Inside The Engine</h2>
+      </div>
+      <p class="text-gray-400 max-w-md mt-4 md:mt-0 text-sm">Our quantitative models process hundreds of data points per second to output probabilistic trading scenarios.</p>
+    </div>
 
-    <div class="grid md:grid-cols-3 gap-8">
-
-      <div class="glass-card p-8 rounded-xl">
-        <h3 class="text-xl font-semibold mb-4 text-primary">
-          Multi-Timeframe Engine
-        </h3>
-        <p class="text-gray-400">
-          Higher timeframe trend validation + lower timeframe precision entry execution.
-        </p>
+    <div class="grid md:grid-cols-3 gap-8 text-left">
+      <div class="glass-card p-8 rounded-2xl gsap-reveal">
+        <div class="w-12 h-12 rounded-lg bg-[#22D3EE]/20 flex items-center justify-center mb-6 text-[#22D3EE] text-2xl">⚡</div>
+        <h3 class="text-xl font-bold mb-4 text-white">Multi-Timeframe Engine</h3>
+        <p class="text-gray-400 text-sm">Higher timeframe trend validation + lower timeframe precision entry execution. Uses EMA 9/50/200, RSI, MACD, ADX, and Bollinger Bands.</p>
       </div>
 
-      <div class="glass-card p-8 rounded-xl">
-        <h3 class="text-xl font-semibold mb-4 text-primary">
-          Structured 1% Risk Model
-        </h3>
-        <p class="text-gray-400">
-          Fixed capital allocation per trade. No martingale. Controlled drawdown.
-        </p>
+      <div class="glass-card p-8 rounded-2xl gsap-reveal">
+        <div class="w-12 h-12 rounded-lg bg-[#A855F7]/20 flex items-center justify-center mb-6 text-[#A855F7] text-2xl">🛡️</div>
+        <h3 class="text-xl font-bold mb-4 text-white">Structured 1% Risk Model</h3>
+        <p class="text-gray-400 text-sm">Fixed capital allocation per trade. No martingale. Controlled drawdown with ATR-based dynamic stops to preserve capital.</p>
       </div>
 
-      <div class="glass-card p-8 rounded-xl">
-        <h3 class="text-xl font-semibold mb-4 text-primary">
-          Quant Confidence Score
-        </h3>
-        <p class="text-gray-400">
-          Every signal includes probability-based confidence level for decision clarity.
-        </p>
+      <div class="glass-card p-8 rounded-2xl gsap-reveal">
+        <div class="w-12 h-12 rounded-lg bg-green-500/20 flex items-center justify-center mb-6 text-green-400 text-2xl">🧠</div>
+        <h3 class="text-xl font-bold mb-4 text-white">Quant Confidence Score</h3>
+        <p class="text-gray-400 text-sm">Every signal includes a probability-based confidence level (0-95%) and a strict trade grade (A+, A, B, C) for decision clarity.</p>
       </div>
-
     </div>
   </div>
 </section>
 
-<! HOW IT WORKS -->
-<section class="py-20 px-6">
-  <div class="max-w-5xl mx-auto text-center">
+<section class="py-24 px-6 relative z-10">
+  <div class="max-w-5xl mx-auto">
 
-    <h2 class="text-3xl font-bold mb-12 gradient-text">
-      How The Engine Works
-    </h2>
+    <h2 class="text-3xl font-bold mb-16 text-center text-white gsap-reveal">Execution Logic Sequence</h2>
 
-    <div class="grid md:grid-cols-4 gap-8 text-left">
-
-      <div class="glass-card p-6 rounded-xl">
-        <h3 class="font-semibold text-primary mb-2">1. Structure Scan</h3>
-        <p class="text-gray-400 text-sm">
-          Higher timeframe bias detection & liquidity mapping.
-        </p>
+    <div class="grid md:grid-cols-4 gap-4 text-left">
+      <div class="glass-card p-6 rounded-xl gsap-reveal border-t-4 border-t-[#22D3EE]">
+        <h3 class="font-bold text-white mb-2 font-mono text-sm">01. Structure</h3>
+        <p class="text-gray-400 text-xs">HTF bias detection (M15, H1, H4, W1) & liquidity mapping.</p>
       </div>
 
-      <div class="glass-card p-6 rounded-xl">
-        <h3 class="font-semibold text-primary mb-2">2. Confluence Check</h3>
-        <p class="text-gray-400 text-sm">
-          RSI, EMA & volatility confirmation.
-        </p>
+      <div class="glass-card p-6 rounded-xl gsap-reveal border-t-4 border-t-[#A855F7]">
+        <h3 class="font-bold text-white mb-2 font-mono text-sm">02. Confluence</h3>
+        <p class="text-gray-400 text-xs">RSI, MACD, EMA, ADX, BB, Stochastic & candlestick patterns.</p>
       </div>
 
-      <div class="glass-card p-6 rounded-xl">
-        <h3 class="font-semibold text-primary mb-2">3. Risk Calculation</h3>
-        <p class="text-gray-400 text-sm">
-          ATR-based dynamic stop loss positioning.
-        </p>
+      <div class="glass-card p-6 rounded-xl gsap-reveal border-t-4 border-t-[#22D3EE]">
+        <h3 class="font-bold text-white mb-2 font-mono text-sm">03. Risk Calc</h3>
+        <p class="text-gray-400 text-xs">ATR dynamic SL positioning, min RR 1:2 (scalp) or 1:2.5 (swing).</p>
       </div>
 
-      <div class="glass-card p-6 rounded-xl">
-        <h3 class="font-semibold text-primary mb-2">4. Signal Deployment</h3>
-        <p class="text-gray-400 text-sm">
-          Structured entry with confidence score.
-        </p>
+      <div class="glass-card p-6 rounded-xl gsap-reveal border-t-4 border-t-[#A855F7]">
+        <h3 class="font-bold text-white mb-2 font-mono text-sm">04. Deployment</h3>
+        <p class="text-gray-400 text-xs">Structured entry with confidence score & detailed reasoning.</p>
       </div>
-
     </div>
 
   </div>
 </section>
   
-<!-- DASHBOARD PREVIEW -->
-<section class="py-20 px-6 bg-cardbg">
-  <div class="max-w-5xl mx-auto text-center">
-    <h2 class="text-3xl font-bold mb-12 gradient-text">
-      AI Engine Dashboard Preview
-    </h2>
-
-    <div class="glass-card p-8 rounded-xl text-left text-gray-300">
-      <div class="grid md:grid-cols-2 gap-8">
-        <div>
-          <p>🕒 Session: <span class="text-primary">London</span></p>
-          <p>📊 Bias: <span class="text-green-400">BULLISH</span></p>
-          <p>📡 Price: <span id="livePrice">2035.20</span></p>
-          <p>🧠 Confidence: <span class="text-primary">78%</span></p>
-        </div>
-        <div>
-          <p>📈 Signal: <span class="text-primary">BUY</span></p>
-          <p>🛑 SL: 2028.50</p>
-          <p>🎯 TP1: 2042.10</p>
-          <p>🎯 TP2: 2048.30</p>
+<section class="py-24 px-6 bg-black/40 relative z-10 border-y border-white/5">
+  <div class="max-w-6xl mx-auto">
+    
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      
+      <div class="gsap-reveal">
+        <p class="text-[#22D3EE] font-mono text-sm tracking-widest uppercase mb-2">// Live Simulation</p>
+        <h2 class="text-4xl font-bold mb-6 text-white">AI Engine Terminal</h2>
+        <p class="text-gray-400 mb-8">Watch the algorithm process live XAUUSD data, filter noise, and generate high-probability trade setups in real-time.</p>
+        
+        <div class="glass-card p-6 rounded-xl">
+          <div class="grid grid-cols-2 gap-6">
+            <div>
+              <p class="text-gray-500 font-mono text-xs uppercase mb-1">Live Feed</p>
+              <p class="text-3xl font-bold text-white mb-2" id="livePrice">2035.20</p>
+              <p class="text-xs text-green-400 bg-green-400/10 px-2 py-1 rounded inline-block">● LONDON OPEN</p>
+            </div>
+            <div>
+              <p class="text-gray-500 font-mono text-xs uppercase mb-1">Current Bias</p>
+              <p class="text-xl font-bold text-[#22D3EE] mb-2">BULLISH</p>
+              <p class="text-xs text-gray-400">Confidence: 78% [A]</p>
+            </div>
+          </div>
         </div>
       </div>
+
+      <div class="terminal-box p-6 rounded-xl gsap-reveal shadow-[0_0_30px_rgba(34,211,238,0.1)] relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#22D3EE] to-[#A855F7]"></div>
+        
+        <div class="flex gap-2 mb-6 border-b border-white/10 pb-4">
+          <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+          <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+          <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+        </div>
+        
+        <div class="text-sm space-y-3">
+          <p class="text-gray-500">> root@zacademy:~# run quant_engine.py</p>
+          <p class="text-[#22D3EE]" id="aiTyping">Initializing AI Engine...</p>
+          
+          <div class="mt-6 border border-[#22D3EE]/30 bg-[#22D3EE]/5 p-4 rounded text-[#22D3EE]">
+            <p class="font-bold text-white mb-2">⚠ SIGNAL DEPLOYED: BUY XAUUSD</p>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <p>ENTRY: 2035.20</p> <p>SL: 2028.50</p>
+              <p>TP1: 2042.10</p> <p>TP2: 2048.30</p>
+            </div>
+            <p class="text-gray-400 mt-2 text-xs">Reason: HTF bullish alignment, RSI pullback, liquidity sweep.</p>
+          </div>
+        </div>
+      </div>
+
     </div>
-  </div>
-</section>
-
-<div class="divider-line"></div>
-
-<!-- AI SIGNAL SIMULATION -->
-<section class="py-20 px-6">
-  <div class="max-w-4xl mx-auto text-center">
-    <h2 class="text-3xl font-bold mb-10 gradient-text">
-      Live AI Signal Simulation
-    </h2>
-
-    <div class="glass-card p-8 rounded-xl text-left text-gray-300">
-      <p id="aiTyping">Initializing AI Engine...</p>
-    </div>
-  </div>
-</section>
-
-<div class="divider-line"></div>
-
-<!-- TRADE TICKER -->
-<section class="py-6 bg-darkbg overflow-hidden">
-  <div class="whitespace-nowrap animate-marquee text-primary text-sm py-2">
-    🔥 BUY XAUUSD @2031.20 ✔ TP1 HIT —
-    SELL XAUUSD @2040.50 ✔ SL HIT —
-    BUY XAUUSD @2033.10 ✔ TP2 HIT —
-    SELL XAUUSD @2045.20 ✔ TP1 HIT —
   </div>
 </section>
 
@@ -395,422 +392,388 @@ setInterval(() => {
   document.getElementById("userCount").innerText = count;
 }, 5000);
 
-// Fake Live Price
-setInterval(() => {
-  let base = 2035;
-  let random = (Math.random() * 5).toFixed(2);
-  document.getElementById("livePrice").innerText = (base + parseFloat(random)).toFixed(2);
-}, 3000);
+let fakePrice = 2038.20;
+let directionBias = 1;
 
-// AI Typing Simulation
+function updateFakePrice() {
+  let movement = (Math.random() * 0.35);
+  if (Math.random() < 0.12) directionBias *= -1;
+  fakePrice += directionBias * movement;
+  if (fakePrice > 2055) directionBias = -1;
+  if (fakePrice < 2025) directionBias = 1;
+  document.getElementById("livePrice").innerText = fakePrice.toFixed(2);
+}
+setInterval(updateFakePrice, 3000);
+
 const messages = [
-  "Scanning Higher Timeframe...",
-  "Detecting Liquidity Sweep...",
-  "Validating RSI Pullback...",
-  "Calculating ATR Risk Model...",
-  "Generating Institutional Signal...",
-  "Signal Ready ✔"
+  "> Scanning Higher Timeframe...",
+  "> Detecting Liquidity Sweep...",
+  "> Validating RSI Pullback...",
+  "> Calculating ATR Risk Model...",
+  "> Generating Signal..."
 ];
-
 let index = 0;
 setInterval(() => {
-  document.getElementById("aiTyping").innerText = messages[index];
+  document.getElementById("aiTyping").innerHTML = messages[index] + '<span class="animate-pulse">_</span>';
   index = (index + 1) % messages.length;
-}, 2500);
+}, 2000);
 </script>
 
-  <!-- ================= PERFORMANCE DASHBOARD ================= -->
-<div class="divider-line"></div>
+<section class="py-24 px-6 relative z-10">
+  <div class="max-w-6xl mx-auto">
 
-<section class="py-20 px-6">
-  <div class="max-w-6xl mx-auto text-center">
-
-    <h2 class="text-3xl font-bold mb-12 gradient-text">
-      📊 ZAcademy Performance Intelligence
-    </h2>
-
-    <!-- CONFIDENCE FILTER -->
-    <div class="glass-card p-8 rounded-xl mb-12">
-      <h3 class="text-xl mb-4 text-primary font-semibold">
-        🎛 Confidence Simulator
-      </h3>
-
-      <label class="block mb-2 text-gray-400">
-        Select Minimum Confidence (%)
-      </label>
-
-      <input type="range" min="50" max="90" value="60" id="confidenceSlider"
-        class="w-full mb-4">
-
-      <p class="text-lg">
-        Filter: <span id="confidenceValue" class="text-primary font-bold">60%</span>
-      </p>
-
-      <p class="mt-4 text-gray-400">
-        Estimated Winrate:
-        <span id="simulatedWinrate" class="text-green-400 font-bold">62%</span>
-      </p>
+    <div class="text-center mb-16 gsap-reveal">
+      <p class="text-[#A855F7] font-mono text-sm tracking-widest uppercase mb-2">// Data Analytics</p>
+      <h2 class="text-4xl font-bold text-white">Performance Intelligence</h2>
     </div>
 
-    <!-- CHARTS -->
-    <div class="grid md:grid-cols-2 gap-12">
+    <div class="glass-card p-8 rounded-2xl mb-12 gsap-reveal max-w-3xl mx-auto text-center border-t-4 border-t-[#A855F7]">
+      <h3 class="text-xl mb-6 text-white font-bold">🎛 Confidence Simulator</h3>
+      
+      <div class="flex justify-between text-xs font-mono text-gray-500 mb-2">
+        <span>50%</span> <span>90%</span>
+      </div>
+      <input type="range" min="50" max="90" value="60" id="confidenceSlider"
+        class="w-full mb-6 accent-[#A855F7] h-2 bg-white/10 rounded-lg appearance-none cursor-pointer">
 
-      <div class="glass-card p-6 rounded-xl">
-        <h3 class="text-lg mb-4 text-primary">📈 Equity Curve</h3>
+      <div class="flex justify-center gap-12 font-mono">
+        <div>
+          <p class="text-gray-500 text-xs uppercase">Filter Limit</p>
+          <p class="text-2xl text-white font-bold" id="confidenceValue">60%</p>
+        </div>
+        <div>
+          <p class="text-gray-500 text-xs uppercase">Est. Winrate</p>
+          <p class="text-2xl text-green-400 font-bold" id="simulatedWinrate">62%</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="glass-card p-6 rounded-2xl gsap-reveal">
+        <h3 class="text-sm font-mono tracking-widest uppercase mb-6 text-gray-400">Equity Growth Curve</h3>
         <canvas id="equityChart"></canvas>
       </div>
 
-      <div class="glass-card p-6 rounded-xl">
-        <h3 class="text-lg mb-4 text-primary">📉 Drawdown</h3>
+      <div class="glass-card p-6 rounded-2xl gsap-reveal">
+        <h3 class="text-sm font-mono tracking-widest uppercase mb-6 text-gray-400">Drawdown Management</h3>
         <canvas id="drawdownChart"></canvas>
       </div>
-
     </div>
 
   </div>
 </section>
 
-<!-- CHART JS CDN -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <script>
-/* ================= REAL MONTH DATA ================= */
+Chart.defaults.color = 'rgba(255, 255, 255, 0.5)';
+Chart.defaults.font.family = "'JetBrains Mono', monospace";
 
-const equityData = [
-  1000, 1080, 1150, 1120, 1240, 1300,
-  1280, 1420, 1500, 1470, 1600, 1720,
-  1680, 1800, 1950, 2100, 2250, 2400,
-  2350, 2500, 2680, 2850, 3000, 3250,
-  3500
-];
-
-const drawdownData = [
-   0, -4, -2, -6, -1, 0,
-  -3,  0, -2, -5,  0,  0,
-  -4,  0, -3,  0,  0,  0,
-  -2,  0,  0, -3,  0,  0,
-   0
-];
-
-const labels = [
-  "Jan 2024","Feb 2024","Mar 2024","Apr 2024","May 2024","Jun 2024",
-  "Jul 2024","Aug 2024","Sep 2024","Oct 2024","Nov 2024","Dec 2024",
-  "Jan 2025","Feb 2025","Mar 2025","Apr 2025","May 2025","Jun 2025",
-  "Jul 2025","Aug 2025","Sep 2025","Oct 2025","Nov 2025","Dec 2025",
-  "Jan 2026"
-];
-
-/* ================= EQUITY CHART ================= */
+const equityData = [1000, 1080, 1150, 1120, 1240, 1300, 1280, 1420, 1500, 1470, 1600, 1720, 1680, 1800, 1950, 2100, 2250, 2400, 2350, 2500, 2680, 2850, 3000, 3250, 3500];
+const drawdownData = [0, -4, -2, -6, -1, 0, -3, 0, -2, -5, 0, 0, -4, 0, -3, 0, 0, 0, -2, 0, 0, -3, 0, 0, 0];
+const labels = Array.from({length: 25}, (_, i) => `M${i+1}`);
 
 new Chart(document.getElementById("equityChart"), {
   type: 'line',
   data: {
     labels: labels,
     datasets: [{
-      label: "Equity Growth",
-      data: equityData,
-      borderColor: "#22D3EE",
-      backgroundColor: "rgba(34,211,238,0.1)",
-      fill: true,
-      tension: 0.4
+      label: "Equity", data: equityData,
+      borderColor: "#22D3EE", backgroundColor: "rgba(34,211,238,0.05)",
+      borderWidth: 2, pointRadius: 0, fill: true, tension: 0.4
     }]
   },
-  options: {
-    responsive: true,
-    plugins: { legend: { display: false } }
-  }
+  options: { responsive: true, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { grid: { color: 'rgba(255,255,255,0.05)' } } } }
 });
-
-/* ================= DRAWDOWN CHART ================= */
 
 new Chart(document.getElementById("drawdownChart"), {
   type: 'bar',
   data: {
     labels: ["T1","T2","T3","T4","T5","T6","T7","T8","T9","T10"],
     datasets: [{
-      label: "Drawdown %",
-      data: drawdownData,
-      backgroundColor: "#A855F7"
+      label: "DD %", data: drawdownData.slice(0,10),
+      backgroundColor: "#A855F7", borderRadius: 4
     }]
   },
-  options: {
-    responsive: true,
-    plugins: {
-      legend: { display: false }
-    }
-  }
+  options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { grid: { color: 'rgba(255,255,255,0.05)' } }, x: { grid: { display: false } } } }
 });
-
-/* ================= CONFIDENCE MAP ================= */
-
-const confidenceWinrateMap = {
-  50: 55,
-  55: 58,
-  60: 62,
-  65: 65,
-  70: 68,
-  75: 71,
-  80: 74,
-  85: 78,
-  90: 82
-};
-
-/* ================= SIMULATOR ================= */
 
 const slider = document.getElementById("confidenceSlider");
 const valueText = document.getElementById("confidenceValue");
 const winrateText = document.getElementById("simulatedWinrate");
 
-function calculateWinrate(confidence) {
-  // Linear formula biar smooth & terlihat quant style
-  return (40 + confidence * 0.45).toFixed(1);
-}
-
 slider.addEventListener("input", function() {
   const val = parseInt(slider.value);
-
   valueText.innerText = val + "%";
-  winrateText.innerText = calculateWinrate(val) + "%";
+  winrateText.innerText = (40 + val * 0.45).toFixed(1) + "%";
 });
 </script>
 
-<!-- LIVE CHART -->
-<section class="py-20 px-6 bg-cardbg">
-  <div class="max-w-6xl mx-auto text-center">
-    <h2 class="text-3xl font-bold mb-10">Live XAUUSD Chart</h2>
-
-    <iframe
-      src="https://s.tradingview.com/widgetembed/?symbol=OANDA:XAUUSD&interval=60&theme=dark"
-      width="100%" height="500" frameborder="0">
-    </iframe>
+<section class="py-24 px-6 bg-black/50 relative z-10 border-y border-white/5">
+  <div class="max-w-6xl mx-auto text-center gsap-reveal">
+    <h2 class="text-3xl font-bold mb-10 text-white">Live Market Data</h2>
+    <div class="glass-card p-2 rounded-2xl overflow-hidden border border-white/10">
+      <iframe src="https://s.tradingview.com/widgetembed/?symbol=OANDA:XAUUSD&interval=60&theme=dark"
+        width="100%" height="500" frameborder="0" class="rounded-xl filter contrast-125">
+      </iframe>
+    </div>
   </div>
 </section>
 
-<!-- PERFORMANCE -->
-<section id="performance" class="py-20 px-6 bg-cardbg">
+<section id="performance" class="py-24 px-6 relative z-10">
   <div class="max-w-6xl mx-auto text-center">
-    <h2 class="text-3xl font-bold mb-12">January 2026 Performance</h2>
+    <h2 class="text-3xl font-bold mb-12 text-white gsap-reveal">January 2026 Audit</h2>
 
-    <div class="grid md:grid-cols-5 gap-6">
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6">
+      <div class="glass-card p-6 rounded-2xl gsap-reveal">
+        <p class="text-gray-500 font-mono text-xs uppercase mb-2">Trades</p>
+        <h3 class="text-3xl font-bold text-white">100</h3>
+      </div>
+      <div class="glass-card p-6 rounded-2xl gsap-reveal border-b-2 border-b-green-400">
+        <p class="text-gray-500 font-mono text-xs uppercase mb-2">Win Rate</p>
+        <h3 class="text-3xl font-bold text-green-400">74%</h3>
+      </div>
+      <div class="glass-card p-6 rounded-2xl gsap-reveal">
+        <p class="text-gray-500 font-mono text-xs uppercase mb-2">Risk/Trade</p>
+        <h3 class="text-3xl font-bold text-white">1%</h3>
+      </div>
+      <div class="glass-card p-6 rounded-2xl gsap-reveal border-b-2 border-b-yellow-400">
+        <p class="text-gray-500 font-mono text-xs uppercase mb-2">Max DD</p>
+        <h3 class="text-3xl font-bold text-yellow-400">17%</h3>
+      </div>
+      <div class="glass-card p-6 rounded-2xl gsap-reveal border-b-2 border-b-[#22D3EE] col-span-2 md:col-span-1">
+        <p class="text-gray-500 font-mono text-xs uppercase mb-2">Net Profit</p>
+        <h3 class="text-3xl font-bold text-[#22D3EE]">$1,056</h3>
+      </div>
+    </div>
+  </div>
+</section>
 
-      <div class="p-6 bg-darkbg rounded-xl glow-box">
-        <p class="text-gray-400">Trades</p>
-        <h3 class="text-2xl font-bold">100</h3>
+<div class="divider-line gsap-reveal"></div>
+
+<section class="py-24 px-6 relative z-10">
+  <div class="max-w-6xl mx-auto text-center">
+
+    <h2 class="text-4xl font-bold mb-4 text-white gsap-reveal">Feature Architecture</h2>
+    <p class="text-gray-400 mb-16 gsap-reveal text-sm">Scalping Engine vs Institutional Swing Engine</p>
+
+    <div class="grid md:grid-cols-2 gap-8 text-left">
+
+      <div class="glass-card p-10 rounded-2xl gsap-reveal border-t-4 border-t-gray-600 hover:border-t-[#22D3EE]">
+        <div class="badge-skew bg-white/5 border border-white/10 px-4 py-1 rounded mb-6">
+          <span class="text-xs tracking-widest font-bold text-white uppercase">Free Mode</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-8 text-white">Scalping Engine</h3>
+
+        <div class="space-y-6 text-gray-400 text-sm">
+          <div>
+            <h4 class="font-bold text-white mb-3 text-xs uppercase tracking-widest border-b border-white/10 pb-2">Indicators</h4>
+            <ul class="space-y-2">
+              <li>• EMA 9, 50, 200 (M5 & M15)</li>
+              <li>• RSI (14) & MACD Histogram</li>
+              <li>• ATR (14) Dynamic Stops</li>
+              <li>• Bollinger Bands & ADX</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold text-white mb-3 text-xs uppercase tracking-widest border-b border-white/10 pb-2">Risk & Structure</h4>
+            <ul class="space-y-2">
+              <li>• Liquidity Sweep Detection</li>
+              <li>• Min RR 1:2</li>
+              <li>• Confidence Score ≥50</li>
+            </ul>
+          </div>
+        </div>
       </div>
 
-      <div class="p-6 bg-darkbg rounded-xl glow-box">
-        <p class="text-gray-400">Win Rate</p>
-        <h3 class="text-2xl font-bold text-green-400">74%</h3>
-      </div>
+      <div class="premium-card p-10 rounded-2xl gsap-reveal shadow-[0_0_50px_rgba(168,85,247,0.2)]">
+        <div class="flex justify-between items-center mb-6">
+          <div class="badge-skew bg-[#A855F7]/20 border border-[#A855F7]/50 px-4 py-1 rounded">
+            <span class="text-xs tracking-widest font-bold text-[#A855F7] uppercase">Pro Mode</span>
+          </div>
+          <span class="text-xs font-mono text-yellow-400 animate-pulse">★ INSTITUTIONAL</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-8 text-white">Swing Engine</h3>
 
-      <div class="p-6 bg-darkbg rounded-xl glow-box">
-        <p class="text-gray-400">Risk / Trade</p>
-        <h3 class="text-2xl font-bold">1%</h3>
-      </div>
-
-      <div class="p-6 bg-darkbg rounded-xl glow-box">
-        <p class="text-gray-400">Max Drawdown</p>
-        <h3 class="text-2xl font-bold text-yellow-400">17%</h3>
-      </div>
-
-      <div class="p-6 bg-darkbg rounded-xl glow-box">
-        <p class="text-gray-400">Net Profit</p>
-        <h3 class="text-2xl font-bold text-primary">$1,056</h3>
+        <div class="space-y-6 text-gray-300 text-sm">
+          <div>
+            <h4 class="font-bold text-[#22D3EE] mb-3 text-xs uppercase tracking-widest border-b border-white/10 pb-2">HTF Analysis</h4>
+            <ul class="space-y-2">
+              <li>• Weekly & H4 EMA200 Bias</li>
+              <li>• Break of Structure (BoS)</li>
+              <li>• RSI Divergence (30-bar)</li>
+              <li>• Fibo Retracement (38.2%, 50%)</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold text-[#A855F7] mb-3 text-xs uppercase tracking-widest border-b border-white/10 pb-2">Enhanced Risk</h4>
+            <ul class="space-y-2">
+              <li>• Min RR 1:2.5 to 1:3+ Target</li>
+              <li>• Limit Entry Zones</li>
+              <li>• ATR Expansion Filter</li>
+              <li>• Dual Engine (Swing + Scalp)</li>
+            </ul>
+          </div>
+        </div>
       </div>
 
     </div>
   </div>
 </section>
 
-  <!-- PRICING -->
-<section id="pricing" class="py-20 px-6 bg-cardbg">
-  <div class="max-w-4xl mx-auto text-center">
-    <h2 class="text-3xl font-bold mb-12">Pricing</h2>
-
-    <div class="bg-darkbg p-10 rounded-xl glow-box relative">
-
-  <div class="absolute top-4 right-4 bg-red-600 text-white text-xs px-3 py-1 rounded-full animate-pulse">
-    Price Increasing Soon
-  </div>
-
-  <h3 class="text-2xl font-bold mb-4 text-primary">Pro AI Engine</h3>
-
-  <p class="text-sm text-white/60 mb-2 line-through">
-  Rp 499K
-</p>
-
-<p class="text-4xl font-bold mb-2 text-primary">
-  Rp 299K / Month
-</p>
-
-<p class="text-sm text-yellow-400 mb-6">
-  Early Access Pricing — Will Adjust After 500 Members
-</p>
-
-  <p class="text-sm text-yellow-400 mb-6">
-    Early Access Rate — Limited Time
-  </p>
-
-  <a href="https://t.me/ZAcademysignalv2_bot" target="_blank"
-    class="bg-primary text-black px-8 py-3 rounded-lg font-semibold hover:opacity-80">
-    Secure Access Now
-  </a>
-
-</div>
-  </div>
-</section>
-
-
-<!-- WHY CHOOSE US -->
-<section class="py-20 px-6">
+<section id="pricing" class="py-24 px-6 bg-black/40 relative z-10 border-y border-white/5">
   <div class="max-w-6xl mx-auto text-center">
-    <h2 class="text-3xl font-bold mb-12">Why Choose Our AI?</h2>
+    <p class="text-[#22D3EE] font-mono text-sm tracking-widest uppercase mb-2 gsap-reveal">// Access</p>
+    <h2 class="text-4xl font-bold mb-16 text-white gsap-reveal">System Deployment Plans</h2>
 
-    <div class="grid md:grid-cols-3 gap-8">
+    <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
 
-      <div class="bg-cardbg p-8 rounded-xl glow-box">
-        <h3 class="text-xl font-semibold mb-4 text-primary">1% Risk Model</h3>
-        <p class="text-gray-400">Fixed capital allocation per trade. No over-leverage.</p>
+      <div class="glass-card p-10 rounded-2xl gsap-reveal flex flex-col">
+        <h3 class="text-xl font-bold mb-2 text-white uppercase tracking-widest">Basic Access</h3>
+        <p class="text-4xl font-bold mb-6 text-gray-400 font-mono">Rp 0</p>
+        <div class="text-left text-sm text-gray-400 space-y-4 mb-10 flex-grow">
+          <p class="flex items-center gap-3"><span class="text-white">✔</span> Scalping Signal</p>
+          <p class="flex items-center gap-3"><span class="text-white">✔</span> Basic Indicator Logic</p>
+          <p class="flex items-center gap-3"><span class="text-white">✔</span> Risk:Reward 1:2</p>
+          <p class="flex items-center gap-3 opacity-30"><span class="text-red-500">✖</span> No HTF Filter</p>
+          <p class="flex items-center gap-3 opacity-30"><span class="text-red-500">✖</span> No Limit Zones</p>
+        </div>
+        <a href="https://t.me/ZAcademysignalv2_bot" target="_blank"
+          class="border border-white/20 text-white px-8 py-4 rounded-xl font-bold hover:bg-white hover:text-black transition uppercase tracking-widest text-xs w-full block">
+          Initialize Free
+        </a>
       </div>
 
-      <div class="bg-cardbg p-8 rounded-xl glow-box">
-        <h3 class="text-xl font-semibold mb-4 text-primary">Multi-Timeframe Logic</h3>
-        <p class="text-gray-400">Higher timeframe trend + lower timeframe precision entry.</p>
-      </div>
-
-      <div class="bg-cardbg p-8 rounded-xl glow-box">
-        <h3 class="text-xl font-semibold mb-4 text-primary">No Martingale</h3>
-        <p class="text-gray-400">No grid. No averaging down. Pure probability execution.</p>
+      <div class="premium-card p-10 rounded-2xl relative gsap-reveal flex flex-col">
+        <div class="absolute -top-4 right-8 bg-gradient-to-r from-[#22D3EE] to-[#A855F7] text-white text-xs px-4 py-1 rounded-full font-bold shadow-lg">
+          RECOMMENDED
+        </div>
+        <h3 class="text-xl font-bold mb-2 text-white uppercase tracking-widest">Pro License</h3>
+        <div class="mb-6 font-mono">
+          <span class="text-sm text-gray-500 line-through mr-2">Rp 499K</span>
+          <span class="text-4xl font-bold text-[#22D3EE]">Rp 299K</span><span class="text-sm text-gray-400">/mo</span>
+        </div>
+        <div class="text-left text-sm text-gray-300 space-y-4 mb-10 flex-grow">
+          <p class="flex items-center gap-3 text-white font-bold"><span class="text-[#22D3EE]">✔</span> Everything in Basic</p>
+          <p class="flex items-center gap-3"><span class="text-[#22D3EE]">✔</span> H4 Institutional Confirmation</p>
+          <p class="flex items-center gap-3"><span class="text-[#22D3EE]">✔</span> Break of Structure & Liquidity</p>
+          <p class="flex items-center gap-3"><span class="text-[#22D3EE]">✔</span> Limit Entry Zones & RR 1:3+</p>
+        </div>
+        <a href="https://t.me/ZAcademysignalv2_bot" target="_blank"
+          class="glow-button text-black px-8 py-4 rounded-xl font-bold uppercase tracking-widest text-xs w-full block">
+          Deploy Pro Engine
+        </a>
       </div>
 
     </div>
   </div>
 </section>
 
-<!-- FINAL CTA -->
-<section class="py-20 px-6">
-  <div class="max-w-4xl mx-auto text-center glass-card p-12 rounded-2xl">
+<section class="py-24 px-6 relative z-10">
+  <div class="max-w-3xl mx-auto">
+    <div class="text-center mb-16 gsap-reveal">
+      <h2 class="text-4xl font-bold mb-4 text-white">Activation Protocol</h2>
+      <p class="text-gray-400">4-step sequence to unlock institutional logic.</p>
+    </div>
 
-    <h2 class="text-3xl font-bold mb-6 gradient-text">
-      Ready to Trade With Quant Edge?
-    </h2>
-
-    <p class="text-gray-400 mb-8">
-      Institutional logic. Structured risk. AI-driven execution.
-    </p>
-
-    <a href="https://t.me/ZAcademysignalv2_bot" target="_blank"
-       class="glow-button text-black px-12 py-4 rounded-lg font-semibold text-lg">
-       Launch AI Engine
-    </a>
-
-  </div>
-</section>
-  
-<!-- HOW TO UPGRADE -->
-<section class="py-28 px-6">
-  <div class="max-w-4xl mx-auto text-center">
-
-    <h2 class="text-4xl font-bold mb-6 gradient-text">
-      Upgrade to ZAcademy AI Trading Engine Pro
-    </h2>
-
-    <p class="text-gray-400 mb-16">
-      Full access to institutional-grade signals, priority execution logic, 
-      and structured capital growth model.
-    </p>
-
-    <div class="space-y-10 text-left max-w-2xl mx-auto">
-
-      <div class="flex gap-6 items-start">
-        <div class="text-primary font-bold text-xl">01</div>
-        <div>
-          <h3 class="font-semibold text-white">Launch Telegram Bot</h3>
-          <p class="text-gray-400 text-sm">
-            Click the button below to open the official ZAcademy AI bot.
-          </p>
+    <div class="space-y-6 relative before:absolute before:inset-0 before:ml-6 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-[#22D3EE]/50 before:to-transparent">
+      
+      <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group gsap-reveal">
+        <div class="flex items-center justify-center w-12 h-12 rounded-full bg-[#050816] border-2 border-[#22D3EE] text-[#22D3EE] font-mono font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_15px_rgba(34,211,238,0.2)] z-10">01</div>
+        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-3rem)] glass-card p-6 rounded-2xl">
+          <h3 class="font-bold text-white mb-1">Launch Bot</h3>
+          <p class="text-sm text-gray-400">Open official ZAcademy AI terminal on Telegram.</p>
         </div>
       </div>
 
-      <div class="flex gap-6 items-start">
-        <div class="text-primary font-bold text-xl">02</div>
-        <div>
-          <h3 class="font-semibold text-white">Activate Pro Access</h3>
-          <p class="text-gray-400 text-sm">
-            Use the <span class="text-primary font-semibold">/upgrade</span> command 
-            inside the bot to start activation.
-          </p>
+      <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group gsap-reveal">
+        <div class="flex items-center justify-center w-12 h-12 rounded-full bg-[#050816] border-2 border-[#22D3EE] text-[#22D3EE] font-mono font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">02</div>
+        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-3rem)] glass-card p-6 rounded-2xl">
+          <h3 class="font-bold text-white mb-1">Command</h3>
+          <p class="text-sm text-gray-400">Type <code class="text-[#A855F7] bg-white/5 px-2 py-0.5 rounded text-xs">/upgrade</code> to init verification.</p>
         </div>
       </div>
 
-      <div class="flex gap-6 items-start">
-        <div class="text-primary font-bold text-xl">03</div>
-        <div>
-          <h3 class="font-semibold text-white">Complete Payment</h3>
-          <p class="text-gray-400 text-sm">
-            Secure payment verification. Instant system unlock.
-          </p>
+      <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group gsap-reveal">
+        <div class="flex items-center justify-center w-12 h-12 rounded-full bg-[#050816] border-2 border-[#22D3EE] text-[#22D3EE] font-mono font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">03</div>
+        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-3rem)] glass-card p-6 rounded-2xl">
+          <h3 class="font-bold text-white mb-1">Verify</h3>
+          <p class="text-sm text-gray-400">Secure payment gateway routing.</p>
         </div>
       </div>
 
-      <div class="flex gap-6 items-start">
-        <div class="text-primary font-bold text-xl">04</div>
-        <div>
-          <h3 class="font-semibold text-white">Access Institutional Engine</h3>
-          <p class="text-gray-400 text-sm">
-            Pro dashboard & premium AI signals activated.
-          </p>
+      <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group gsap-reveal">
+        <div class="flex items-center justify-center w-12 h-12 rounded-full bg-[#050816] border-2 border-[#22D3EE] text-[#22D3EE] font-mono font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_15px_rgba(34,211,238,0.2)] z-10">04</div>
+        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-3rem)] glass-card p-6 rounded-2xl border-l-4 border-l-[#A855F7]">
+          <h3 class="font-bold text-white mb-1">Unlock</h3>
+          <p class="text-sm text-gray-400">Pro signals stream activated.</p>
         </div>
       </div>
 
     </div>
 
-    <div class="mt-16">
+    <div class="text-center mt-16 gsap-reveal">
       <a href="https://t.me/ZAcademysignalv2_bot" target="_blank"
-         class="glow-button text-black px-12 py-4 rounded-lg font-semibold text-lg">
+         class="glow-button text-black px-12 py-5 rounded-xl font-bold uppercase tracking-widest text-sm inline-block">
          Activate Pro Now
       </a>
-
-      <p class="text-xs text-gray-500 mt-4">
-        Pro access limited per cycle. Capacity increases monthly.
-      </p>
     </div>
 
   </div>
 </section>
 
-<footer class="py-10 text-center text-gray-500 text-sm">
-  © 2026 ZAcademy AI Trading — XAUUSD Forex System
-  <br>
-  Trading involves risk. Past performance does not guarantee future results.
+<footer class="py-12 text-center relative z-10 border-t border-white/5 bg-black/50">
+  <img src="/Xauusd---ai/logo.png" class="w-16 mx-auto mb-6 opacity-30 grayscale filter">
+  <p class="text-gray-600 text-xs font-mono tracking-widest uppercase mb-2">© 2026 ZAcademy AI Trading</p>
+  <p class="text-gray-700 text-xs max-w-md mx-auto px-6">Trading involves high risk. Past performance does not guarantee future results. Execute responsibly.</p>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+
 <script>
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      document.querySelector(this.getAttribute('href'))
-        .scrollIntoView({ behavior: 'smooth' });
-    });
-  });
+/* 1. LENIS SMOOTH SCROLL */
+const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smooth: true });
+function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+requestAnimationFrame(raf);
+gsap.registerPlugin(ScrollTrigger);
 
-  const revealElements = document.querySelectorAll("section");
-
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = 1;
-        entry.target.style.transform = "translateY(0)";
-      }
-    });
+/* 2. CUSTOM CURSOR */
+const cursorDot = document.querySelector(".cursor-dot");
+const cursorOutline = document.querySelector(".cursor-outline");
+window.addEventListener("mousemove", (e) => {
+  cursorDot.style.left = `${e.clientX}px`; cursorDot.style.top = `${e.clientY}px`;
+  gsap.to(cursorOutline, { x: e.clientX, y: e.clientY, duration: 0.15, ease: "power2.out" });
+});
+document.querySelectorAll("a, button").forEach(el => {
+  el.addEventListener("mouseenter", () => {
+    cursorOutline.style.width = "60px"; cursorOutline.style.height = "60px";
+    cursorOutline.style.backgroundColor = "rgba(34, 211, 238, 0.1)";
+    cursorOutline.style.borderColor = "#22D3EE";
   });
-
-  revealElements.forEach(el => {
-    el.style.opacity = 0;
-    el.style.transform = "translateY(40px)";
-    el.style.transition = "all 0.8s ease";
-    observer.observe(el);
+  el.addEventListener("mouseleave", () => {
+    cursorOutline.style.width = "40px"; cursorOutline.style.height = "40px";
+    cursorOutline.style.backgroundColor = "transparent";
+    cursorOutline.style.borderColor = "rgba(168, 85, 247, 0.6)";
   });
+});
+
+/* 3. GSAP SCROLL ANIMATIONS */
+gsap.from(".gsap-hero", { y: 40, opacity: 0, duration: 1, stagger: 0.1, ease: "power3.out", delay: 0.1 });
+gsap.utils.toArray('.gsap-reveal').forEach(elem => {
+  gsap.fromTo(elem, { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 0.8, ease: "power2.out", scrollTrigger: { trigger: elem, start: "top 85%" } });
+});
+gsap.utils.toArray('.parallax-orb').forEach(orb => {
+  const speed = orb.getAttribute('data-speed');
+  gsap.to(orb, { y: () => (ScrollTrigger.maxScroll(window) * speed), ease: "none", scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: true } });
+});
+
+/* 4. SCROLL ANCHOR */
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault(); lenis.scrollTo(this.getAttribute('href'));
+  });
+});
 </script>
 
 </body>
