@@ -135,7 +135,7 @@
       border-color: #22D3EE;
     }
 
-    /* ===== STATUS BAR ===== */
+    /* ===== STATUS BAR & NOTION-STYLE NAVBAR ===== */
     .status-bar {
       background: rgba(5,8,22,0.7);
       backdrop-filter: blur(10px);
@@ -145,6 +145,17 @@
       top: 0;
       z-index: 100;
       height: 56px;
+    }
+    
+    .notion-navbar {
+      background: rgba(5,8,22,0.85);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      position: fixed;
+      width: 100%;
+      top: 56px;
+      z-index: 99;
+      height: 64px;
     }
 
     /* ===== ANIMATIONS - LIGHTWEIGHT ===== */
@@ -247,6 +258,8 @@
     @media (max-width: 768px) {
       h1 { font-size: 2.5rem; }
       .status-bar { height: 48px; font-size: 0.7rem; }
+      .notion-navbar { top: 48px; height: 56px; }
+      #main-content { padding-top: 104px; } /* 48 + 56 */
     }
 
     /* ===== LOADING STATE ===== */
@@ -255,22 +268,24 @@
       0%, 100% { opacity: 1; }
       50% { opacity: 0.5; }
     }
+
+    /* ===== TABBED VIEW SUPPORT ===== */
+    /* Menyembunyikan section yang tidak aktif */
+    .section-view { display: none; padding-top: 140px; min-height: 100vh; }
+    #main-content { padding-bottom: 60px; }
   </style>
 </head>
 
 <body>
 
-<!-- CURSOR -->
 <div class="cursor-dot"></div>
 <div class="cursor-outline"></div>
 
-<!-- BACKGROUND -->
 <div class="bg-grid"></div>
 <div class="bg-orb orb-1"></div>
 <div class="bg-orb orb-2"></div>
 <div class="bg-orb orb-3"></div>
 
-<!-- STATUS BAR -->
 <div class="status-bar py-3">
   <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-xs px-6 font-mono uppercase text-white/60">
     <div class="flex items-center gap-3 mb-2 md:mb-0">
@@ -284,348 +299,418 @@
   </div>
 </div>
 
-<!-- HERO SECTION -->
-<section class="min-h-screen flex items-center justify-center px-6 relative z-10 pt-20">
-  <div class="max-w-5xl text-center">
-
-    <div class="badge fade-in mb-8">
-      <span class="text-xs tracking-[0.3em] text-[#22D3EE] font-bold">Quant Engine v4.2</span>
-    </div>
-
-    <h1 class="text-5xl md:text-7xl font-bold mb-6 gradient-text fade-in delay-1 leading-tight">
-      ZACADEMY AI<br>TRADING
-    </h1>
-
-    <p class="text-base md:text-lg text-gray-400 max-w-2xl mx-auto mt-4 fade-in delay-2">
-      Institutional multi-timeframe analysis. Engineered for absolute discipline with structured 1% risk architecture.
-    </p>
-
-    <div class="fade-in delay-3 text-xs font-mono text-[#A855F7] bg-[#A855F7]/10 py-3 px-6 rounded-full border border-[#A855F7]/20 w-fit mx-auto mt-8 mb-8">
-      <span>● No Martingale</span>
-      <span class="text-white/30 mx-2">|</span>
-      <span>● 1% Risk Model</span>
-      <span class="text-white/30 mx-2">|</span>
-      <span>● Institutional Logic</span>
-    </div>
-
-    <div class="flex flex-col md:flex-row justify-center gap-4 fade-in delay-3">
-      <a href="https://t.me/ZAcademysignalv2_bot" target="_blank"
-         class="btn-glow text-black px-8 py-3 rounded-lg font-bold uppercase tracking-wider text-sm">
-         Launch AI Engine
-      </a>
-      <a href="#pricing"
-         class="btn-outline text-white px-8 py-3 rounded-lg font-semibold uppercase tracking-wider text-sm">
-         View Pricing
-      </a>
-    </div>
-
-    <p class="text-xs text-gray-500 mt-12 font-mono fade-in delay-3">
-      🟢 Active Traders: <span id="userCount" class="text-white font-bold">1,500+</span>
-    </p>
-
-  </div>  
-</section>
-
-<div class="divider"></div>
-
-<!-- STATS SECTION -->
-<section class="py-16 px-6 relative z-10">
-  <div class="max-w-6xl mx-auto">
-    <div class="grid md:grid-cols-3 gap-6">
-      
-      <div class="glass-card p-8 rounded-xl text-center fade-in">
-        <p class="text-gray-400 font-mono text-xs uppercase mb-3">Community</p>
-        <h3 class="text-4xl font-bold text-white">1,500+</h3>
-        <p class="text-xs text-gray-500 mt-2">Telegram Members</p>
-      </div>
-
-      <div class="glass-card p-8 rounded-xl text-center fade-in delay-1">
-        <p class="text-gray-400 font-mono text-xs uppercase mb-3">Win Rate</p>
-        <h3 class="text-4xl font-bold text-green-400">74%</h3>
-        <p class="text-xs text-gray-500 mt-2">January 2026 Audit</p>
-      </div>
-
-      <div class="glass-card p-8 rounded-xl text-center fade-in delay-2">
-        <p class="text-gray-400 font-mono text-xs uppercase mb-3">Max Drawdown</p>
-        <h3 class="text-4xl font-bold text-yellow-400">17%</h3>
-        <p class="text-xs text-gray-500 mt-2">Capital Protected</p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ENGINE ARCHITECTURE -->
-<section class="py-20 px-6 bg-black/30 relative z-10 border-y border-white/5">
-  <div class="max-w-6xl mx-auto">
+<nav class="notion-navbar flex items-center px-6">
+  <div class="max-w-7xl mx-auto w-full flex justify-between items-center">
     
-    <div class="mb-16">
-      <p class="text-[#22D3EE] font-mono text-sm uppercase mb-2">// Architecture</p>
-      <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Inside The Engine</h2>
-      <p class="text-gray-400 max-w-xl">Quantitative models processing market data with institutional-grade logic.</p>
-    </div>
-
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="glass-card p-6 rounded-xl fade-in">
-        <div class="text-3xl mb-4">⚡</div>
-        <h3 class="text-lg font-bold mb-3 text-white">Multi-Timeframe</h3>
-        <p class="text-sm text-gray-400">HTF trend validation + LTF precision entry. EMA, RSI, MACD, ADX, BB.</p>
-      </div>
-
-      <div class="glass-card p-6 rounded-xl fade-in delay-1">
-        <div class="text-3xl mb-4">🛡️</div>
-        <h3 class="text-lg font-bold mb-3 text-white">1% Risk Model</h3>
-        <p class="text-sm text-gray-400">Fixed allocation. No martingale. ATR-based stops. Capital preservation.</p>
-      </div>
-
-      <div class="glass-card p-6 rounded-xl fade-in delay-2">
-        <div class="text-3xl mb-4">🧠</div>
-        <h3 class="text-lg font-bold mb-3 text-white">Confidence Score</h3>
-        <p class="text-sm text-gray-400">0-95% probability. Grades A+, A, B, C. Transparent reasoning.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- EXECUTION SEQUENCE -->
-<section class="py-20 px-6 relative z-10">
-  <div class="max-w-5xl mx-auto">
-    <h2 class="text-3xl font-bold mb-12 text-center text-white">Execution Sequence</h2>
-
-    <div class="grid md:grid-cols-4 gap-4">
-      <div class="glass-card p-6 rounded-lg border-t-4 border-t-[#22D3EE] fade-in">
-        <h4 class="font-bold text-white text-sm mb-2">01. Structure</h4>
-        <p class="text-xs text-gray-400">HTF bias detection & liquidity mapping.</p>
-      </div>
-
-      <div class="glass-card p-6 rounded-lg border-t-4 border-t-[#A855F7] fade-in delay-1">
-        <h4 class="font-bold text-white text-sm mb-2">02. Confluence</h4>
-        <p class="text-xs text-gray-400">Multi-indicator alignment & patterns.</p>
-      </div>
-
-      <div class="glass-card p-6 rounded-lg border-t-4 border-t-[#22D3EE] fade-in delay-2">
-        <h4 class="font-bold text-white text-sm mb-2">03. Risk Calc</h4>
-        <p class="text-xs text-gray-400">ATR SL positioning & RR validation.</p>
-      </div>
-
-      <div class="glass-card p-6 rounded-lg border-t-4 border-t-[#A855F7] fade-in delay-3">
-        <h4 class="font-bold text-white text-sm mb-2">04. Deploy</h4>
-        <p class="text-xs text-gray-400">Signal with confidence & reasoning.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- LIVE TERMINAL -->
-<section class="py-20 px-6 bg-black/30 relative z-10 border-y border-white/5">
-  <div class="max-w-6xl mx-auto">
-    <div class="grid md:grid-cols-2 gap-12 items-center">
-      
-      <div class="fade-in">
-        <p class="text-[#22D3EE] font-mono text-sm uppercase mb-2">// Terminal</p>
-        <h2 class="text-3xl font-bold mb-6 text-white">AI Engine Live</h2>
-        <p class="text-gray-400 mb-6">Real-time XAUUSD data processing with institutional entry generation.</p>
-        
-        <div class="glass-card p-6 rounded-lg">
-          <div class="grid grid-cols-2 gap-4">
-            <div>
-              <p class="text-gray-500 font-mono text-xs mb-1">PRICE</p>
-              <p class="text-2xl font-bold text-white" id="livePrice">2035.20</p>
-            </div>
-            <div>
-              <p class="text-gray-500 font-mono text-xs mb-1">BIAS</p>
-              <p class="text-xl font-bold text-[#22D3EE]">BULLISH</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="terminal-box p-6 rounded-lg">
-        <div class="flex gap-2 mb-4 border-b border-white/10 pb-3">
-          <div class="w-3 h-3 rounded-full bg-red-500/60"></div>
-          <div class="w-3 h-3 rounded-full bg-yellow-500/60"></div>
-          <div class="w-3 h-3 rounded-full bg-green-500/60"></div>
-        </div>
-        
-        <div class="text-sm space-y-2">
-          <p class="text-gray-500">> zacademy$ run engine</p>
-          <p class="text-[#22D3EE]" id="aiTyping">Scanning structure...</p>
-          
-          <div class="mt-4 border border-[#22D3EE]/30 bg-[#22D3EE]/5 p-3 rounded text-[#22D3EE] text-xs">
-            <p class="font-bold text-white mb-2">⚠ SIGNAL: BUY</p>
-            <p>ENTRY: 2035.20 | SL: 2028.50</p>
-            <p>TP1: 2042 | TP2: 2048</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PERFORMANCE AUDIT -->
-<section class="py-20 px-6 relative z-10">
-  <div class="max-w-6xl mx-auto">
-    <h2 class="text-3xl font-bold mb-12 text-center text-white">January 2026 Results</h2>
-
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
-      <div class="glass-card p-6 rounded-lg text-center fade-in">
-        <p class="text-gray-500 font-mono text-xs mb-2">Total</p>
-        <h3 class="text-3xl font-bold">100</h3>
-      </div>
-      <div class="glass-card p-6 rounded-lg text-center border-b-2 border-b-green-400 fade-in delay-1">
-        <p class="text-gray-500 font-mono text-xs mb-2">Win Rate</p>
-        <h3 class="text-3xl font-bold text-green-400">74%</h3>
-      </div>
-      <div class="glass-card p-6 rounded-lg text-center fade-in delay-2">
-        <p class="text-gray-500 font-mono text-xs mb-2">Risk/Trade</p>
-        <h3 class="text-3xl font-bold">1%</h3>
-      </div>
-      <div class="glass-card p-6 rounded-lg text-center border-b-2 border-b-yellow-400 fade-in delay-3">
-        <p class="text-gray-500 font-mono text-xs mb-2">Max DD</p>
-        <h3 class="text-3xl font-bold text-yellow-400">17%</h3>
-      </div>
-      <div class="glass-card p-6 rounded-lg text-center border-b-2 border-b-[#22D3EE] fade-in delay-3">
-        <p class="text-gray-500 font-mono text-xs mb-2">Profit</p>
-        <h3 class="text-3xl font-bold text-[#22D3EE]">$1,056</h3>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FEATURES COMPARISON -->
-<section class="py-20 px-6 bg-black/30 relative z-10 border-y border-white/5">
-  <div class="max-w-6xl mx-auto">
-    <h2 class="text-3xl font-bold mb-4 text-center text-white">Engine Comparison</h2>
-    <p class="text-gray-400 text-center mb-12">Scalp (Free) vs Swing (PRO)</p>
-
-    <div class="grid md:grid-cols-2 gap-8">
-
-      <!-- FREE -->
-      <div class="glass-card p-8 rounded-lg border-t-4 border-t-gray-600 fade-in">
-        <div class="badge mb-6">
-          <span class="text-xs text-white font-bold">FREE</span>
-        </div>
-        <h3 class="text-2xl font-bold mb-6 text-white">Scalping Engine</h3>
-        
-        <div class="space-y-4 text-sm">
-          <div>
-            <h4 class="font-bold text-white mb-2 text-xs uppercase">Indicators</h4>
-            <ul class="text-gray-400 space-y-1 text-xs">
-              <li>✓ EMA 9, 50, 200 (M5)</li>
-              <li>✓ RSI & MACD</li>
-              <li>✓ Bollinger Bands</li>
-              <li>✓ ATR Dynamic Stops</li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="font-bold text-white mb-2 text-xs uppercase">Risk</h4>
-            <ul class="text-gray-400 space-y-1 text-xs">
-              <li>✓ Min RR 1:2</li>
-              <li>✓ Confidence ≥50</li>
-            </ul>
-          </div>
-        </div>
-
-        <a href="https://t.me/ZAcademysignalv2_bot" target="_blank"
-          class="btn-outline text-white w-full mt-8 px-6 py-3 rounded-lg font-semibold uppercase text-xs">
-          Start Free
-        </a>
-      </div>
-
-      <!-- PRO -->
-      <div class="premium-card p-8 rounded-lg fade-in delay-1">
-        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#22D3EE] to-[#A855F7] text-white text-xs px-4 py-1 rounded-full font-bold">
-          RECOMMENDED
-        </div>
-        <h3 class="text-2xl font-bold mb-2 text-white mt-6">Swing Engine</h3>
-        <p class="text-3xl font-bold text-[#22D3EE] mb-6">Rp 299K<span class="text-sm text-gray-500">/mo</span></p>
-        
-        <div class="space-y-4 text-sm">
-          <div>
-            <h4 class="font-bold text-[#22D3EE] mb-2 text-xs uppercase">HTF Analysis</h4>
-            <ul class="text-gray-300 space-y-1 text-xs">
-              <li>✓ H4 Institutional Confirmation</li>
-              <li>✓ Break of Structure</li>
-              <li>✓ Liquidity Detection</li>
-              <li>✓ RSI Divergence (30-bar)</li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="font-bold text-[#A855F7] mb-2 text-xs uppercase">Advanced</h4>
-            <ul class="text-gray-300 space-y-1 text-xs">
-              <li>✓ Limit Entry Zones</li>
-              <li>✓ RR 1:3+ Targets</li>
-              <li>✓ Volume Anomaly Radar</li>
-            </ul>
-          </div>
-        </div>
-
-        <a href="https://t.me/ZAcademysignalv2_bot" target="_blank"
-          class="btn-glow text-black w-full mt-8 px-6 py-3 rounded-lg font-bold uppercase text-xs">
-          Upgrade to PRO
-        </a>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ACTIVATION -->
-<section class="py-20 px-6 relative z-10">
-  <div class="max-w-3xl mx-auto">
-    <h2 class="text-3xl font-bold mb-12 text-center text-white">Activation Steps</h2>
-
-    <div class="space-y-6">
-      <div class="flex gap-4 fade-in">
-        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-[#22D3EE]/20 border border-[#22D3EE] flex items-center justify-center text-[#22D3EE] font-bold text-sm">01</div>
-        <div class="glass-card p-4 rounded-lg flex-grow">
-          <h3 class="font-bold text-white text-sm">Launch Bot</h3>
-          <p class="text-xs text-gray-400 mt-1">Open @ZAcademysignalv2_bot on Telegram</p>
-        </div>
-      </div>
-
-      <div class="flex gap-4 fade-in delay-1">
-        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-[#A855F7]/20 border border-[#A855F7] flex items-center justify-center text-[#A855F7] font-bold text-sm">02</div>
-        <div class="glass-card p-4 rounded-lg flex-grow">
-          <h3 class="font-bold text-white text-sm">Send Command</h3>
-          <p class="text-xs text-gray-400 mt-1">Type <code class="bg-white/10 px-1">/upgrade</code> for PRO</p>
-        </div>
-      </div>
-
-      <div class="flex gap-4 fade-in delay-2">
-        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-[#22D3EE]/20 border border-[#22D3EE] flex items-center justify-center text-[#22D3EE] font-bold text-sm">03</div>
-        <div class="glass-card p-4 rounded-lg flex-grow">
-          <h3 class="font-bold text-white text-sm">Payment</h3>
-          <p class="text-xs text-gray-400 mt-1">Transfer Rp 299K to activate 30-day license</p>
-        </div>
-      </div>
-
-      <div class="flex gap-4 fade-in delay-3">
-        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-[#A855F7]/20 border border-[#A855F7] flex items-center justify-center text-[#A855F7] font-bold text-sm">04</div>
-        <div class="glass-card p-4 rounded-lg flex-grow">
-          <h3 class="font-bold text-white text-sm">Unlock</h3>
-          <p class="text-xs text-gray-400 mt-1">Pro signals stream activated immediately</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="text-center mt-12">
-      <a href="https://t.me/ZAcademysignalv2_bot" target="_blank"
-         class="btn-glow text-black px-10 py-4 rounded-lg font-bold uppercase text-sm inline-block">
-         Activate Now
+    <div class="flex items-center gap-8">
+      <a href="#" onclick="switchTab('hero'); return false;" class="text-white font-bold text-lg tracking-wider flex items-center gap-2">
+        ZAcademy
       </a>
+      
+      <div class="relative group h-16 flex items-center">
+        <button class="text-sm font-semibold text-gray-300 hover:text-white flex items-center gap-1 cursor-none">
+          Features
+          <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </button>
+        
+        <div class="absolute top-[60px] left-0 w-[600px] glass-card rounded-xl p-4 shadow-2xl invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-300 border border-white/10 z-50">
+          <div class="grid grid-cols-2 gap-2">
+            <button onclick="switchTab('stats')" class="text-left p-3 hover:bg-white/5 rounded-lg transition group/item cursor-none">
+              <div class="flex items-center gap-3">
+                <span class="text-xl">📊</span>
+                <div>
+                  <h4 class="text-white text-sm font-bold group-hover/item:text-[#22D3EE] transition">Stats & Community</h4>
+                  <p class="text-xs text-gray-500 mt-0.5">Win rate & user count</p>
+                </div>
+              </div>
+            </button>
+            <button onclick="switchTab('architecture')" class="text-left p-3 hover:bg-white/5 rounded-lg transition group/item cursor-none">
+              <div class="flex items-center gap-3">
+                <span class="text-xl">⚙️</span>
+                <div>
+                  <h4 class="text-white text-sm font-bold group-hover/item:text-[#A855F7] transition">Architecture</h4>
+                  <p class="text-xs text-gray-500 mt-0.5">Inside the engine models</p>
+                </div>
+              </div>
+            </button>
+            <button onclick="switchTab('sequence')" class="text-left p-3 hover:bg-white/5 rounded-lg transition group/item cursor-none">
+              <div class="flex items-center gap-3">
+                <span class="text-xl">🔄</span>
+                <div>
+                  <h4 class="text-white text-sm font-bold group-hover/item:text-[#22D3EE] transition">Execution Sequence</h4>
+                  <p class="text-xs text-gray-500 mt-0.5">How the AI decides</p>
+                </div>
+              </div>
+            </button>
+            <button onclick="switchTab('terminal')" class="text-left p-3 hover:bg-white/5 rounded-lg transition group/item cursor-none">
+              <div class="flex items-center gap-3">
+                <span class="text-xl">💻</span>
+                <div>
+                  <h4 class="text-white text-sm font-bold group-hover/item:text-[#A855F7] transition">Live Terminal</h4>
+                  <p class="text-xs text-gray-500 mt-0.5">Real-time data processing</p>
+                </div>
+              </div>
+            </button>
+            <button onclick="switchTab('audit')" class="text-left p-3 hover:bg-white/5 rounded-lg transition group/item cursor-none">
+              <div class="flex items-center gap-3">
+                <span class="text-xl">📈</span>
+                <div>
+                  <h4 class="text-white text-sm font-bold group-hover/item:text-[#22D3EE] transition">Performance Audit</h4>
+                  <p class="text-xs text-gray-500 mt-0.5">Monthly trading results</p>
+                </div>
+              </div>
+            </button>
+          </div>
+          <div class="mt-4 pt-4 border-t border-white/10 flex justify-between items-center">
+            <span class="text-xs text-gray-400">Discover all AI tools</span>
+            <button onclick="switchTab('pricing')" class="text-[#22D3EE] text-xs font-bold hover:text-white cursor-none">View Engine Comparison →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="flex items-center gap-6">
+      <button onclick="switchTab('pricing')" class="text-sm font-semibold text-gray-300 hover:text-white hidden md:block cursor-none">Pricing</button>
+      <button onclick="switchTab('activation')" class="text-sm font-semibold text-gray-300 hover:text-white hidden md:block cursor-none">How to Start</button>
+      <a href="https://t.me/ZAcademysignalv2_bot" target="_blank" class="btn-glow text-black px-4 py-2 rounded font-bold text-xs uppercase shadow-[0_0_15px_rgba(34,211,238,0.3)]">Launch App</a>
     </div>
   </div>
-</section>
+</nav>
 
-<!-- FOOTER -->
-<footer class="border-t border-white/5 py-8 relative z-10 text-center">
+<main id="main-content">
+
+  <section id="hero" class="section-view !pt-20 flex items-center justify-center px-6 relative z-10" style="display: flex;">
+    <div class="max-w-5xl text-center">
+
+      <div class="badge fade-in mb-8">
+        <span class="text-xs tracking-[0.3em] text-[#22D3EE] font-bold">Quant Engine v4.2</span>
+      </div>
+
+      <h1 class="text-5xl md:text-7xl font-bold mb-6 gradient-text fade-in delay-1 leading-tight">
+        ZACADEMY AI<br>TRADING
+      </h1>
+
+      <p class="text-base md:text-lg text-gray-400 max-w-2xl mx-auto mt-4 fade-in delay-2">
+        Institutional multi-timeframe analysis. Engineered for absolute discipline with structured 1% risk architecture.
+      </p>
+
+      <div class="fade-in delay-3 text-xs font-mono text-[#A855F7] bg-[#A855F7]/10 py-3 px-6 rounded-full border border-[#A855F7]/20 w-fit mx-auto mt-8 mb-8">
+        <span>● No Martingale</span>
+        <span class="text-white/30 mx-2">|</span>
+        <span>● 1% Risk Model</span>
+        <span class="text-white/30 mx-2">|</span>
+        <span>● Institutional Logic</span>
+      </div>
+
+      <div class="flex flex-col md:flex-row justify-center gap-4 fade-in delay-3">
+        <a href="https://t.me/ZAcademysignalv2_bot" target="_blank"
+           class="btn-glow text-black px-8 py-3 rounded-lg font-bold uppercase tracking-wider text-sm cursor-none">
+           Launch AI Engine
+        </a>
+        <button onclick="switchTab('pricing')"
+           class="btn-outline text-white px-8 py-3 rounded-lg font-semibold uppercase tracking-wider text-sm cursor-none">
+           View Pricing
+        </button>
+      </div>
+
+      <p class="text-xs text-gray-500 mt-12 font-mono fade-in delay-3">
+        🟢 Active Traders: <span id="userCount" class="text-white font-bold">1,500+</span>
+      </p>
+
+    </div>  
+  </section>
+
+  <section id="stats" class="section-view py-16 px-6 relative z-10">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold mb-12 text-center text-white">Community & Stats</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        
+        <div class="glass-card p-8 rounded-xl text-center fade-in">
+          <p class="text-gray-400 font-mono text-xs uppercase mb-3">Community</p>
+          <h3 class="text-4xl font-bold text-white">1,500+</h3>
+          <p class="text-xs text-gray-500 mt-2">Telegram Members</p>
+        </div>
+
+        <div class="glass-card p-8 rounded-xl text-center fade-in delay-1">
+          <p class="text-gray-400 font-mono text-xs uppercase mb-3">Win Rate</p>
+          <h3 class="text-4xl font-bold text-green-400">74%</h3>
+          <p class="text-xs text-gray-500 mt-2">January 2026 Audit</p>
+        </div>
+
+        <div class="glass-card p-8 rounded-xl text-center fade-in delay-2">
+          <p class="text-gray-400 font-mono text-xs uppercase mb-3">Max Drawdown</p>
+          <h3 class="text-4xl font-bold text-yellow-400">17%</h3>
+          <p class="text-xs text-gray-500 mt-2">Capital Protected</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="architecture" class="section-view py-20 px-6 bg-black/30 relative z-10 border-y border-white/5">
+    <div class="max-w-6xl mx-auto">
+      
+      <div class="mb-16 text-center">
+        <p class="text-[#22D3EE] font-mono text-sm uppercase mb-2">// Architecture</p>
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Inside The Engine</h2>
+        <p class="text-gray-400 max-w-xl mx-auto">Quantitative models processing market data with institutional-grade logic.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="glass-card p-6 rounded-xl fade-in">
+          <div class="text-3xl mb-4">⚡</div>
+          <h3 class="text-lg font-bold mb-3 text-white">Multi-Timeframe</h3>
+          <p class="text-sm text-gray-400">HTF trend validation + LTF precision entry. EMA, RSI, MACD, ADX, BB.</p>
+        </div>
+
+        <div class="glass-card p-6 rounded-xl fade-in delay-1">
+          <div class="text-3xl mb-4">🛡️</div>
+          <h3 class="text-lg font-bold mb-3 text-white">1% Risk Model</h3>
+          <p class="text-sm text-gray-400">Fixed allocation. No martingale. ATR-based stops. Capital preservation.</p>
+        </div>
+
+        <div class="glass-card p-6 rounded-xl fade-in delay-2">
+          <div class="text-3xl mb-4">🧠</div>
+          <h3 class="text-lg font-bold mb-3 text-white">Confidence Score</h3>
+          <p class="text-sm text-gray-400">0-95% probability. Grades A+, A, B, C. Transparent reasoning.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sequence" class="section-view py-20 px-6 relative z-10">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-bold mb-12 text-center text-white">Execution Sequence</h2>
+
+      <div class="grid md:grid-cols-4 gap-4">
+        <div class="glass-card p-6 rounded-lg border-t-4 border-t-[#22D3EE] fade-in">
+          <h4 class="font-bold text-white text-sm mb-2">01. Structure</h4>
+          <p class="text-xs text-gray-400">HTF bias detection & liquidity mapping.</p>
+        </div>
+
+        <div class="glass-card p-6 rounded-lg border-t-4 border-t-[#A855F7] fade-in delay-1">
+          <h4 class="font-bold text-white text-sm mb-2">02. Confluence</h4>
+          <p class="text-xs text-gray-400">Multi-indicator alignment & patterns.</p>
+        </div>
+
+        <div class="glass-card p-6 rounded-lg border-t-4 border-t-[#22D3EE] fade-in delay-2">
+          <h4 class="font-bold text-white text-sm mb-2">03. Risk Calc</h4>
+          <p class="text-xs text-gray-400">ATR SL positioning & RR validation.</p>
+        </div>
+
+        <div class="glass-card p-6 rounded-lg border-t-4 border-t-[#A855F7] fade-in delay-3">
+          <h4 class="font-bold text-white text-sm mb-2">04. Deploy</h4>
+          <p class="text-xs text-gray-400">Signal with confidence & reasoning.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="terminal" class="section-view py-20 px-6 bg-black/30 relative z-10 border-y border-white/5">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        
+        <div class="fade-in">
+          <p class="text-[#22D3EE] font-mono text-sm uppercase mb-2">// Terminal</p>
+          <h2 class="text-3xl font-bold mb-6 text-white">AI Engine Live</h2>
+          <p class="text-gray-400 mb-6">Real-time XAUUSD data processing with institutional entry generation.</p>
+          
+          <div class="glass-card p-6 rounded-lg">
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <p class="text-gray-500 font-mono text-xs mb-1">PRICE</p>
+                <p class="text-2xl font-bold text-white" id="livePrice">2035.20</p>
+              </div>
+              <div>
+                <p class="text-gray-500 font-mono text-xs mb-1">BIAS</p>
+                <p class="text-xl font-bold text-[#22D3EE]">BULLISH</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="terminal-box p-6 rounded-lg">
+          <div class="flex gap-2 mb-4 border-b border-white/10 pb-3">
+            <div class="w-3 h-3 rounded-full bg-red-500/60"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500/60"></div>
+            <div class="w-3 h-3 rounded-full bg-green-500/60"></div>
+          </div>
+          
+          <div class="text-sm space-y-2">
+            <p class="text-gray-500">> zacademy$ run engine</p>
+            <p class="text-[#22D3EE]" id="aiTyping">Scanning structure...</p>
+            
+            <div class="mt-4 border border-[#22D3EE]/30 bg-[#22D3EE]/5 p-3 rounded text-[#22D3EE] text-xs">
+              <p class="font-bold text-white mb-2">⚠ SIGNAL: BUY</p>
+              <p>ENTRY: 2035.20 | SL: 2028.50</p>
+              <p>TP1: 2042 | TP2: 2048</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="audit" class="section-view py-20 px-6 relative z-10">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold mb-12 text-center text-white">January 2026 Results</h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <div class="glass-card p-6 rounded-lg text-center fade-in">
+          <p class="text-gray-500 font-mono text-xs mb-2">Total</p>
+          <h3 class="text-3xl font-bold">100</h3>
+        </div>
+        <div class="glass-card p-6 rounded-lg text-center border-b-2 border-b-green-400 fade-in delay-1">
+          <p class="text-gray-500 font-mono text-xs mb-2">Win Rate</p>
+          <h3 class="text-3xl font-bold text-green-400">74%</h3>
+        </div>
+        <div class="glass-card p-6 rounded-lg text-center fade-in delay-2">
+          <p class="text-gray-500 font-mono text-xs mb-2">Risk/Trade</p>
+          <h3 class="text-3xl font-bold">1%</h3>
+        </div>
+        <div class="glass-card p-6 rounded-lg text-center border-b-2 border-b-yellow-400 fade-in delay-3">
+          <p class="text-gray-500 font-mono text-xs mb-2">Max DD</p>
+          <h3 class="text-3xl font-bold text-yellow-400">17%</h3>
+        </div>
+        <div class="glass-card p-6 rounded-lg text-center border-b-2 border-b-[#22D3EE] fade-in delay-3">
+          <p class="text-gray-500 font-mono text-xs mb-2">Profit</p>
+          <h3 class="text-3xl font-bold text-[#22D3EE]">$1,056</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" class="section-view py-20 px-6 bg-black/30 relative z-10 border-y border-white/5">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold mb-4 text-center text-white">Engine Comparison</h2>
+      <p class="text-gray-400 text-center mb-12">Scalp (Free) vs Swing (PRO)</p>
+
+      <div class="grid md:grid-cols-2 gap-8">
+
+        <div class="glass-card p-8 rounded-lg border-t-4 border-t-gray-600 fade-in">
+          <div class="badge mb-6">
+            <span class="text-xs text-white font-bold">FREE</span>
+          </div>
+          <h3 class="text-2xl font-bold mb-6 text-white">Scalping Engine</h3>
+          
+          <div class="space-y-4 text-sm">
+            <div>
+              <h4 class="font-bold text-white mb-2 text-xs uppercase">Indicators</h4>
+              <ul class="text-gray-400 space-y-1 text-xs">
+                <li>✓ EMA 9, 50, 200 (M5)</li>
+                <li>✓ RSI & MACD</li>
+                <li>✓ Bollinger Bands</li>
+                <li>✓ ATR Dynamic Stops</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="font-bold text-white mb-2 text-xs uppercase">Risk</h4>
+              <ul class="text-gray-400 space-y-1 text-xs">
+                <li>✓ Min RR 1:2</li>
+                <li>✓ Confidence ≥50</li>
+              </ul>
+            </div>
+          </div>
+
+          <a href="https://t.me/ZAcademysignalv2_bot" target="_blank"
+             class="btn-outline text-white w-full mt-8 px-6 py-3 rounded-lg font-semibold uppercase text-xs inline-block text-center cursor-none">
+             Start Free
+          </a>
+        </div>
+
+        <div class="premium-card p-8 rounded-lg fade-in delay-1">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#22D3EE] to-[#A855F7] text-white text-xs px-4 py-1 rounded-full font-bold">
+            RECOMMENDED
+          </div>
+          <h3 class="text-2xl font-bold mb-2 text-white mt-6">Swing Engine</h3>
+          <p class="text-3xl font-bold text-[#22D3EE] mb-6">Rp 299K<span class="text-sm text-gray-500">/mo</span></p>
+          
+          <div class="space-y-4 text-sm">
+            <div>
+              <h4 class="font-bold text-[#22D3EE] mb-2 text-xs uppercase">HTF Analysis</h4>
+              <ul class="text-gray-300 space-y-1 text-xs">
+                <li>✓ H4 Institutional Confirmation</li>
+                <li>✓ Break of Structure</li>
+                <li>✓ Liquidity Detection</li>
+                <li>✓ RSI Divergence (30-bar)</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="font-bold text-[#A855F7] mb-2 text-xs uppercase">Advanced</h4>
+              <ul class="text-gray-300 space-y-1 text-xs">
+                <li>✓ Limit Entry Zones</li>
+                <li>✓ RR 1:3+ Targets</li>
+                <li>✓ Volume Anomaly Radar</li>
+              </ul>
+            </div>
+          </div>
+
+          <a href="https://t.me/ZAcademysignalv2_bot" target="_blank"
+             class="btn-glow text-black w-full mt-8 px-6 py-3 rounded-lg font-bold uppercase text-xs inline-block text-center cursor-none">
+             Upgrade to PRO
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="activation" class="section-view py-20 px-6 relative z-10">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="text-3xl font-bold mb-12 text-center text-white">Activation Steps</h2>
+
+      <div class="space-y-6">
+        <div class="flex gap-4 fade-in">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-[#22D3EE]/20 border border-[#22D3EE] flex items-center justify-center text-[#22D3EE] font-bold text-sm">01</div>
+          <div class="glass-card p-4 rounded-lg flex-grow">
+            <h3 class="font-bold text-white text-sm">Launch Bot</h3>
+            <p class="text-xs text-gray-400 mt-1">Open @ZAcademysignalv2_bot on Telegram</p>
+          </div>
+        </div>
+
+        <div class="flex gap-4 fade-in delay-1">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-[#A855F7]/20 border border-[#A855F7] flex items-center justify-center text-[#A855F7] font-bold text-sm">02</div>
+          <div class="glass-card p-4 rounded-lg flex-grow">
+            <h3 class="font-bold text-white text-sm">Send Command</h3>
+            <p class="text-xs text-gray-400 mt-1">Type <code class="bg-white/10 px-1">/upgrade</code> for PRO</p>
+          </div>
+        </div>
+
+        <div class="flex gap-4 fade-in delay-2">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-[#22D3EE]/20 border border-[#22D3EE] flex items-center justify-center text-[#22D3EE] font-bold text-sm">03</div>
+          <div class="glass-card p-4 rounded-lg flex-grow">
+            <h3 class="font-bold text-white text-sm">Payment</h3>
+            <p class="text-xs text-gray-400 mt-1">Transfer Rp 299K to activate 30-day license</p>
+          </div>
+        </div>
+
+        <div class="flex gap-4 fade-in delay-3">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-[#A855F7]/20 border border-[#A855F7] flex items-center justify-center text-[#A855F7] font-bold text-sm">04</div>
+          <div class="glass-card p-4 rounded-lg flex-grow">
+            <h3 class="font-bold text-white text-sm">Unlock</h3>
+            <p class="text-xs text-gray-400 mt-1">Pro signals stream activated immediately</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-12">
+        <a href="https://t.me/ZAcademysignalv2_bot" target="_blank"
+           class="btn-glow text-black px-10 py-4 rounded-lg font-bold uppercase text-sm inline-block cursor-none">
+           Activate Now
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="border-t border-white/5 py-8 relative z-10 text-center bg-black/40">
   <p class="text-gray-600 text-xs mb-1">© 2026 ZAcademy AI Trading</p>
   <p class="text-gray-700 text-xs max-w-md mx-auto">Professional trading signals with institutional logic. Execute responsibly.</p>
 </footer>
 
 <script>
-// ===== LIGHTWEIGHT SCRIPT - NO GSAP, NO LENIS =====
+// ===== LIGHTWEIGHT SCRIPT =====
 
 // Cursor tracking
 const cursorDot = document.querySelector('.cursor-dot');
@@ -685,35 +770,36 @@ setInterval(() => {
   msgIndex = (msgIndex + 1) % messages.length;
 }, 1500);
 
-// Intersection observer for fade-in animation
-const observerOptions = {
-  threshold: 0.1,
-  rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.style.opacity = '1';
-      entry.target.style.animation = 'fadeUp 0.6s ease-out forwards';
+// Tabbed Navigation System (To minimize scrolling)
+function switchTab(sectionId) {
+  const sections = ['hero', 'stats', 'architecture', 'sequence', 'terminal', 'audit', 'pricing', 'activation'];
+  
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      if (id === sectionId) {
+        el.style.display = (id === 'hero') ? 'flex' : 'block';
+        
+        // Trigger ulang animasi fade-in
+        const animatedEls = el.querySelectorAll('.fade-in');
+        animatedEls.forEach(node => {
+          node.classList.remove('fade-in');
+          void node.offsetWidth; // trigger reflow
+          node.classList.add('fade-in');
+        });
+      } else {
+        el.style.display = 'none';
+      }
     }
   });
-}, observerOptions);
 
-document.querySelectorAll('.fade-in').forEach(el => {
-  el.style.opacity = '0';
-  observer.observe(el);
-});
+  // Scroll smoothly to top of the content area
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
-// Smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
-    e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  });
+// Inisialisasi: Pastikan hanya hero yang muncul pertama kali
+document.addEventListener('DOMContentLoaded', () => {
+  switchTab('hero');
 });
 </script>
 
