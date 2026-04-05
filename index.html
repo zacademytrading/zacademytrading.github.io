@@ -18,7 +18,7 @@
     ::-webkit-scrollbar-thumb { background: #22D3EE; border-radius: 10px; }
 
     html, body { 
-      width: 100%; 
+      width: 100%;
       font-family: 'Sora', sans-serif;
       overscroll-behavior: none;
     }
@@ -262,13 +262,15 @@
       .status-bar { height: 48px; font-size: 0.7rem; }
       .notion-navbar { top: 48px; height: 56px; }
       #main-content { padding-top: 104px; }
-      #hero.section-view { padding-top: 20px; }
+      .section-view { padding-top: 20px; padding-bottom: 40px; }
+      #hero.section-view { min-height: 100vh; padding-top: 20px; }
     }
 
     @media (min-width: 769px) {
       .notion-navbar { top: 56px; }
       #main-content { padding-top: 120px; }
-      #hero.section-view { padding-top: 40px; }
+      .section-view { padding-top: 40px; padding-bottom: 60px; }
+      #hero.section-view { min-height: 100vh; padding-top: 40px; }
     }
 
     /* ===== LOADING STATE ===== */
@@ -350,10 +352,36 @@
 
     /* ===== TABBED VIEW SUPPORT ===== */
     /* Menyembunyikan section yang tidak aktif */
-    .section-view { display: none; min-height: 100vh; padding: 0; }
-    .section-view.active-section { display: block; }
-    #hero.section-view { display: flex; padding-top: 40px; }
-    #main-content { padding-bottom: 60px; padding-top: 120px; }
+    .section-view { 
+      display: none; 
+      width: 100%;
+      padding-top: 40px;
+      padding-bottom: 60px;
+      min-height: auto;
+    }
+    .section-view.active-section { 
+      display: block; 
+    }
+    #hero.section-view { 
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding-left: 24px;
+      padding-right: 24px;
+      padding-top: 40px;
+      padding-bottom: 60px;
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      min-height: 100vh;
+    }
+    #main-content { 
+      padding-bottom: 60px;
+      padding-top: 120px;
+      position: relative;
+      z-index: 10;
+    }
   </style>
 </head>
 
@@ -459,7 +487,7 @@
 
 <main id="main-content">
 
-  <section id="hero" class="section-view flex items-center justify-center px-6 relative z-10" style="display: flex;">
+  <section id="hero" class="section-view active-section">
     <div class="max-w-5xl text-center">
 
       <div class="badge fade-in mb-8">
