@@ -27,7 +27,6 @@
     body {
       background-color: #050816;
       color: #fff;
-      cursor: none;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
@@ -51,19 +50,7 @@
     .orb-2 { width: 400px; height: 400px; background: #A855F7; top: 30%; right: -100px; }
     .orb-3 { width: 600px; height: 600px; background: #22D3EE; bottom: -250px; left: 10%; }
 
-    /* ===== CURSOR ===== */
-    .cursor-dot, .cursor-outline {
-      position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
-      border-radius: 50%; z-index: 9999; pointer-events: none;
-    }
-    .cursor-dot { 
-      width: 6px; height: 6px; background-color: #22D3EE; 
-      box-shadow: 0 0 10px #22D3EE; 
-    }
-    .cursor-outline {
-      width: 40px; height: 40px; border: 1.5px solid rgba(168, 85, 247, 0.6);
-      transition: width 0.15s, height 0.15s, border-color 0.15s;
-    }
+
 
     /* ===== TYPOGRAPHY ===== */
     h1, h2, h3 { letter-spacing: -0.03em; font-weight: 800; }
@@ -145,6 +132,21 @@
       top: 0;
       z-index: 100;
       height: 56px;
+    }
+
+    /* Top bar container improvements */
+    .status-bar .max-w-7xl {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .top-bar-right {
+      display: flex;
+      gap: 20px;
+      white-space: nowrap;
     }
     
     .notion-navbar {
@@ -262,11 +264,86 @@
       #main-content { padding-top: 104px; } /* 48 + 56 */
     }
 
+    @media (min-width: 769px) {
+      .notion-navbar { top: 56px; }
+      #main-content { padding-top: 112px; } /* 56 + 56 */
+    }
+
     /* ===== LOADING STATE ===== */
     .pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
     @keyframes pulse {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.5; }
+    }
+
+    /* ===== STAT CARD GLOW EFFECTS ===== */
+    .stat-card-glow {
+      transition: all 0.3s ease;
+    }
+
+    .stat-card-glow:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
+    }
+
+    .stat-card-glow:hover h3 {
+      color: #22D3EE;
+    }
+
+    /* ===== BREATHING/PULSE BUTTON ANIMATION ===== */
+    .btn-pulse {
+      animation: buttonPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    @keyframes buttonPulse {
+      0%, 100% {
+        box-shadow: 0 0 15px rgba(34, 211, 238, 0.3), 0 0 25px rgba(168, 85, 247, 0.15);
+      }
+      50% {
+        box-shadow: 0 0 25px rgba(34, 211, 238, 0.6), 0 0 40px rgba(168, 85, 247, 0.3);
+      }
+    }
+
+    /* ===== GOLD TICKER ANIMATION ===== */
+
+    /* ===== SECURITY BADGE ===== */
+    .security-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(34, 211, 238, 0.1);
+      border: 1px solid rgba(34, 211, 238, 0.3);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      color: #22D3EE;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .security-badge::before {
+      content: '🛡️';
+      font-size: 0.9rem;
+    }
+
+    /* ===== TESTIMONIAL SLIDER ===== */
+    .testimonial-slide {
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+      position: absolute;
+      width: 100%;
+    }
+
+    .testimonial-slide.active {
+      opacity: 1;
+      position: relative;
+    }
+
+    .testimonial-slider-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
     }
 
     /* ===== TABBED VIEW SUPPORT ===== */
@@ -278,26 +355,24 @@
 
 <body>
 
-<div class="cursor-dot"></div>
-<div class="cursor-outline"></div>
-
 <div class="bg-grid"></div>
 <div class="bg-orb orb-1"></div>
 <div class="bg-orb orb-2"></div>
 <div class="bg-orb orb-3"></div>
 
 <div class="status-bar py-3">
-  <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-xs px-6 font-mono uppercase text-white/60">
-    <div class="flex items-center gap-3 mb-2 md:mb-0">
+  <div class="max-w-7xl mx-auto flex justify-between items-center text-xs px-6 font-mono uppercase text-white/60 flex-wrap gap-2">
+    <div class="flex items-center gap-3">
       <span class="w-2 h-2 bg-[#22D3EE] rounded-full animate-pulse"></span>
       <span class="text-[#22D3EE] font-bold">System Online</span>
     </div>
-    <div class="flex items-center gap-4 md:gap-6">
-      <span class="hidden sm:inline">📡 Feed: Connected</span>
+    <div class="top-bar-right hidden md:flex">
+      <span>📡 Feed: Connected</span>
       <span>⚡ Mode: London</span>
     </div>
   </div>
-</div>
+<!-- LIVE XAUUSD TICKER -->
+<!-- Removed -->
 
 <nav class="notion-navbar flex items-center px-6">
   <div class="max-w-7xl mx-auto w-full flex justify-between items-center">
@@ -313,7 +388,8 @@
           <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
         </button>
         
-        <div class="absolute top-[60px] left-0 w-[600px] glass-card rounded-xl p-4 shadow-2xl invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-300 border border-white/10 z-50">
+        <div class="absolute top-[60px] left-0 w-[600px] rounded-xl p-4 shadow-2xl invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-300 z-50"
+             style="background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);">
           <div class="grid grid-cols-2 gap-2">
             <button onclick="switchTab('stats')" class="text-left p-3 hover:bg-white/5 rounded-lg transition group/item cursor-none">
               <div class="flex items-center gap-3">
@@ -372,7 +448,7 @@
     <div class="flex items-center gap-6">
       <button onclick="switchTab('pricing')" class="text-sm font-semibold text-gray-300 hover:text-white hidden md:block cursor-none">Pricing</button>
       <button onclick="switchTab('activation')" class="text-sm font-semibold text-gray-300 hover:text-white hidden md:block cursor-none">How to Start</button>
-      <a href="https://t.me/ZAcademysignalv2_bot" target="_blank" class="btn-glow text-black px-4 py-2 rounded font-bold text-xs uppercase shadow-[0_0_15px_rgba(34,211,238,0.3)]">Launch App</a>
+      <a href="https://t.me/ZAcademysignalv2_bot" target="_blank" class="btn-glow btn-pulse text-black px-4 py-2 rounded font-bold text-xs uppercase shadow-[0_0_15px_rgba(34,211,238,0.3)]">Launch App</a>
     </div>
   </div>
 </nav>
@@ -404,7 +480,7 @@
 
       <div class="flex flex-col md:flex-row justify-center gap-4 fade-in delay-3">
         <a href="https://t.me/ZAcademysignalv2_bot" target="_blank"
-           class="btn-glow text-black px-8 py-3 rounded-lg font-bold uppercase tracking-wider text-sm cursor-none">
+           class="btn-glow btn-pulse text-black px-8 py-3 rounded-lg font-bold uppercase tracking-wider text-sm cursor-none">
            Launch AI Engine
         </a>
         <button onclick="switchTab('pricing')"
@@ -425,25 +501,72 @@
       <h2 class="text-3xl font-bold mb-12 text-center text-white">Community & Stats</h2>
       <div class="grid md:grid-cols-3 gap-6">
         
-        <div class="glass-card p-8 rounded-xl text-center fade-in">
+        <div class="glass-card stat-card-glow p-8 rounded-xl text-center fade-in">
           <p class="text-gray-400 font-mono text-xs uppercase mb-3">Community</p>
           <h3 class="text-4xl font-bold text-white">1,500+</h3>
           <p class="text-xs text-gray-500 mt-2">Telegram Members</p>
         </div>
 
-        <div class="glass-card p-8 rounded-xl text-center fade-in delay-1">
+        <div class="glass-card stat-card-glow p-8 rounded-xl text-center fade-in delay-1">
           <p class="text-gray-400 font-mono text-xs uppercase mb-3">Win Rate</p>
           <h3 class="text-4xl font-bold text-green-400">74%</h3>
-          <p class="text-xs text-gray-500 mt-2">January 2026 Audit</p>
+          <p class="text-xs text-gray-500 mt-2"><span class="security-badge" style="margin-top: 6px; display: block; width: fit-content; margin-left: auto; margin-right: auto;">January 2026 Audit</span></p>
         </div>
 
-        <div class="glass-card p-8 rounded-xl text-center fade-in delay-2">
+        <div class="glass-card stat-card-glow p-8 rounded-xl text-center fade-in delay-2">
           <p class="text-gray-400 font-mono text-xs uppercase mb-3">Max Drawdown</p>
           <h3 class="text-4xl font-bold text-yellow-400">17%</h3>
           <p class="text-xs text-gray-500 mt-2">Capital Protected</p>
         </div>
 
       </div>
+
+      <!-- SOCIAL PROOF: TESTIMONIALS SLIDER -->
+      <div class="mt-16">
+        <p class="text-gray-400 text-center text-sm font-mono uppercase mb-8">📸 Member Success Stories</p>
+        <div class="testimonial-slider-container mx-auto max-w-3xl">
+          <!-- Slide 1 -->
+          <div class="testimonial-slide active glass-card p-6 rounded-xl">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#22D3EE] to-[#A855F7] flex items-center justify-center flex-shrink-0 text-sm font-bold">RC</div>
+              <div class="flex-grow">
+                <div class="flex items-center gap-2 mb-2">
+                  <p class="font-bold text-white text-sm">Reza C.</p>
+                  <span style="color: #22D3EE; font-size: 0.75rem;">✓ Verified</span>
+                </div>
+                <p class="text-gray-300 text-sm">\"Winning 6 trades in a row with consistent RR. The system helped me avoid -15% drawdown on EURUSD.\"</p>
+                <p class="text-xs text-gray-500 mt-2">Jakarta • Active since Jan 2026</p>
+              </div>
+            </div>
+          </div>
+          <!-- Slide 2 -->
+          <div class="testimonial-slide glass-card p-6 rounded-xl">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#A855F7] to-[#22D3EE] flex items-center justify-center flex-shrink-0 text-sm font-bold">AW</div>
+              <div class="flex-grow">
+                <div class="flex items-center gap-2 mb-2">
+                  <p class="font-bold text-white text-sm">Andi W.</p>
+                  <span style="color: #22D3EE; font-size: 0.75rem;">✓ Verified</span>
+                </div>
+                <p class="text-gray-300 text-sm">"Finally found an AI system that actually follows discipline. 74% WR is no joke—my portfolio is up 8% this month."</p>
+                <p class="text-xs text-gray-500 mt-2">Surabaya • Active since Dec 2025</p>
+              </div>
+            </div>
+          </div>
+          <!-- Slide 3 -->
+          <div class="testimonial-slide glass-card p-6 rounded-xl">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-[#22D3EE] flex items-center justify-center flex-shrink-0 text-sm font-bold">SK</div>
+              <div class="flex-grow">
+                <div class="flex items-center gap-2 mb-2">
+                  <p class="font-bold text-white text-sm">Siti K.</p>
+                  <span style="color: #22D3EE; font-size: 0.75rem;">✓ Verified</span>
+                </div>
+                <p class="text-gray-300 text-sm">"The 1% risk model is exactly what I needed. No more blowing accounts. Consistent 2-3% gains per week."</p>
+                <p class="text-xs text-gray-500 mt-2">Bandung • Active since Nov 2025</p>
+              </div>
+            </div>
+          </div>\n        </div>\n        <div style=\"text-align: center; margin-top: 12px; gap: 8px; display: flex; justify-content: center;\">\n          <button onclick=\"changeTestimonial(-1)\" style=\"width: 30px; height: 30px; border-radius: 50%; border: 1px solid rgba(34, 211, 238, 0.3); background: transparent; color: #22D3EE; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold;\">←</button>\n          <div id=\"slideIndicator\" style=\"display: flex; gap: 6px;\"></div>\n          <button onclick=\"changeTestimonial(1)\" style=\"width: 30px; height: 30px; border-radius: 50%; border: 1px solid rgba(34, 211, 238, 0.3); background: transparent; color: #22D3EE; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold;\">→</button>\n        </div>\n      </div>
     </div>
   </section>
 
@@ -712,34 +835,6 @@
 <script>
 // ===== LIGHTWEIGHT SCRIPT =====
 
-// Cursor tracking
-const cursorDot = document.querySelector('.cursor-dot');
-const cursorOutline = document.querySelector('.cursor-outline');
-
-document.addEventListener('mousemove', (e) => {
-  cursorDot.style.left = e.clientX + 'px';
-  cursorDot.style.top = e.clientY + 'px';
-  
-  setTimeout(() => {
-    cursorOutline.style.left = e.clientX + 'px';
-    cursorOutline.style.top = e.clientY + 'px';
-  }, 50);
-});
-
-// Hover effects
-document.querySelectorAll('a, button').forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    cursorOutline.style.width = '50px';
-    cursorOutline.style.height = '50px';
-    cursorOutline.style.borderColor = '#22D3EE';
-  });
-  el.addEventListener('mouseleave', () => {
-    cursorOutline.style.width = '40px';
-    cursorOutline.style.height = '40px';
-    cursorOutline.style.borderColor = 'rgba(168, 85, 247, 0.6)';
-  });
-});
-
 // User count animation
 let count = 1500;
 setInterval(() => {
@@ -800,7 +895,55 @@ function switchTab(sectionId) {
 // Inisialisasi: Pastikan hanya hero yang muncul pertama kali
 document.addEventListener('DOMContentLoaded', () => {
   switchTab('hero');
+  initTestimonialSlider();
 });
+
+// ===== TESTIMONIAL SLIDER =====
+let currentSlide = 0;
+const totalSlides = 3;
+
+function initTestimonialSlider() {
+  updateSlideIndicators();
+  // Auto-rotate slides every 6 seconds
+  setInterval(() => {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    updateTestimonials();
+  }, 6000);
+}
+
+function changeTestimonial(direction) {
+  currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+  updateTestimonials();
+}
+
+function updateTestimonials() {
+  const slides = document.querySelectorAll('.testimonial-slide');
+  slides.forEach((slide, index) => {
+    slide.classList.remove('active');
+    if (index === currentSlide) {
+      slide.classList.add('active');
+    }
+  });
+  updateSlideIndicators();
+}
+
+function updateSlideIndicators() {
+  const indicator = document.getElementById('slideIndicator');
+  if (!indicator) return;
+  
+  indicator.innerHTML = '';
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement('div');
+    dot.style.cssText = 'width: 8px; height: 8px; border-radius: 50%; ' + 
+      (i === currentSlide ? 'background: #22D3EE;' : 'background: rgba(34, 211, 238, 0.3);') +
+      ' cursor: pointer; transition: all 0.3s ease;';
+    dot.onclick = () => {
+      currentSlide = i;
+      updateTestimonials();
+    };
+    indicator.appendChild(dot);
+  }
+}
 </script>
 
 </body>
