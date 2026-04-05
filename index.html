@@ -256,7 +256,142 @@
       transition: width 0.3s ease;
     }
 
-    /* ===== RESPONSIVE ===== */
+    /* ===== SCROLL ANIMATIONS ===== */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-60px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(60px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .scroll-animate {
+      opacity: 0;
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    .scroll-animate.slide-left {
+      animation: slideInLeft 0.8s ease-out forwards;
+    }
+
+    .scroll-animate.slide-right {
+      animation: slideInRight 0.8s ease-out forwards;
+    }
+
+    .scroll-animate.scale {
+      animation: scaleIn 0.8s ease-out forwards;
+    }
+
+    /* ===== FEATURES SECTION ===== */
+    .features-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+
+    .feature-card {
+      background: rgba(11, 18, 36, 0.5);
+      border: 1px solid rgba(34, 211, 238, 0.2);
+      padding: 32px 24px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .feature-card:hover::before {
+      left: 100%;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(34, 211, 238, 0.5);
+      box-shadow: 0 0 20px rgba(34, 211, 238, 0.2);
+      transform: translateY(-8px);
+    }
+
+    .feature-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .feature-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .feature-desc {
+      font-size: 0.95rem;
+      color: #8e9bb0;
+      line-height: 1.6;
+    }
+
+    /* ===== STATS COUNTER ===== */
+    .counter-value {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #22D3EE;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .counter-label {
+      font-size: 0.85rem;
+      color: #8e9bb0;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 8px;
+    }
     @media (max-width: 768px) {
       h1 { font-size: 2.5rem; }
       .status-bar { height: 48px; font-size: 0.7rem; }
@@ -526,6 +661,87 @@
       </p>
 
     </div>  
+  </section>
+
+  <!-- FEATURES SECTION - Visible on scroll -->
+  <section class="py-20 px-6 relative z-10">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16 scroll-animate">
+        <p class="text-[#22D3EE] font-mono text-sm uppercase mb-3 tracking-wider">Powered by AI</p>
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Why Traders Choose ZAcademy</h2>
+        <p class="text-lg text-gray-400 max-w-2xl mx-auto">Institutional-grade trading intelligence built with rigorous risk management and proven backtesting.</p>
+      </div>
+
+      <div class="features-container">
+        <!-- Feature 1 -->
+        <div class="feature-card scroll-animate slide-left" style="animation-delay: 0.1s;">
+          <span class="feature-icon">📊</span>
+          <h3 class="feature-title">Multi-Timeframe Analysis</h3>
+          <p class="feature-desc">Analyzes market structure across H4, H1, M15, and M5 timeframes with institutional-grade confluence scoring.</p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="feature-card scroll-animate" style="animation-delay: 0.2s;">
+          <span class="feature-icon">🛡️</span>
+          <h3 class="feature-title">1% Risk Per Trade</h3>
+          <p class="feature-desc">Fixed 1% position sizing with dynamic ATR-based stop losses. Never risking more than 1% of account per trade.</p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="feature-card scroll-animate slide-right" style="animation-delay: 0.3s;">
+          <span class="feature-icon">⚡</span>
+          <h3 class="feature-title">Real-Time Signals</h3>
+          <p class="feature-desc">Lightning-fast signal generation with transparent confidence scores (0-95%) and detailed reasoning.</p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="feature-card scroll-animate slide-left" style="animation-delay: 0.4s;">
+          <span class="feature-icon">🎯</span>
+          <h3 class="feature-title">Precision Entry Zones</h3>
+          <p class="feature-desc">Identifies buy/sell zones using FVG, Order Blocks, and Wyckoff patterns with 70%+ win rate.</p>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="feature-card scroll-animate" style="animation-delay: 0.5s;">
+          <span class="feature-icon">📈</span>
+          <h3 class="feature-title">Consistent Performance</h3>
+          <p class="feature-desc">Audited 74% win rate in January 2026 with average R:R of 1:2.5 across 100+ trades.</p>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="feature-card scroll-animate slide-right" style="animation-delay: 0.6s;">
+          <span class="feature-icon">🔐</span>
+          <h3 class="feature-title">No Martingale Logic</h3>
+          <p class="feature-desc">Pure probability-based trading. No hedging, no averaging down, no dangerous revenge trading.</p>
+        </div>
+      </div>
+
+      <!-- Quick Stats Section -->
+      <div class="mt-24 pt-20 border-t border-white/10">
+        <div class="text-center mb-16 scroll-animate">
+          <h3 class="text-3xl font-bold text-white">Proven Track Record</h3>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div class="text-center scroll-animate scale" style="animation-delay: 0.1s;">
+            <div class="counter-value" data-target="74">0</div>
+            <div class="counter-label">% Win Rate</div>
+          </div>
+          <div class="text-center scroll-animate scale" style="animation-delay: 0.2s;">
+            <div class="counter-value" data-target="100">0</div>
+            <div class="counter-label">Trades Analyzed</div>
+          </div>
+          <div class="text-center scroll-animate scale" style="animation-delay: 0.3s;">
+            <div class="counter-value" data-target="17">0</div>
+            <div class="counter-label">% Max Drawdown</div>
+          </div>
+          <div class="text-center scroll-animate scale" style="animation-delay: 0.4s;">
+            <div class="counter-value">1</div>
+            <div class="counter-label">: 2.5 Avg R:R</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section id="stats" class="section-view py-16 px-6 relative z-10">
@@ -873,6 +1089,58 @@
 
 <script>
 // ===== LIGHTWEIGHT SCRIPT =====
+
+// ===== SCROLL ANIMATIONS WITH INTERSECTION OBSERVER =====
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -100px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('scroll-animate');
+      observer.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
+
+// Observe all elements with scroll-animate class
+document.querySelectorAll('.scroll-animate').forEach(el => {
+  observer.observe(el);
+});
+
+// Counter animation for stats
+function animateCounter(element, target, duration = 2000) {
+  let start = 0;
+  const increment = target / (duration / 16);
+  
+  const timer = setInterval(() => {
+    start += increment;
+    if (start >= target) {
+      element.textContent = target;
+      clearInterval(timer);
+    } else {
+      element.textContent = Math.floor(start);
+    }
+  }, 16);
+}
+
+// Initialize counters when they come into view
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !entry.target.dataset.counted) {
+      const target = parseInt(entry.target.dataset.target);
+      animateCounter(entry.target, target);
+      entry.target.dataset.counted = 'true';
+      counterObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('[data-target]').forEach(el => {
+  counterObserver.observe(el);
+});
 
 // User count animation
 let count = 1500;
