@@ -28,6 +28,7 @@
       color: #fff;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
     }
 
     /* ===== LIGHTWEIGHT BACKGROUND ===== */
@@ -260,12 +261,14 @@
       h1 { font-size: 2.5rem; }
       .status-bar { height: 48px; font-size: 0.7rem; }
       .notion-navbar { top: 48px; height: 56px; }
-      #main-content { padding-top: 104px; } /* 48 + 56 */
+      #main-content { padding-top: 104px; }
+      #hero.section-view { padding-top: 20px; }
     }
 
     @media (min-width: 769px) {
       .notion-navbar { top: 56px; }
-      #main-content { padding-top: 112px; } /* 56 + 56 */
+      #main-content { padding-top: 120px; }
+      #hero.section-view { padding-top: 40px; }
     }
 
     /* ===== LOADING STATE ===== */
@@ -347,8 +350,10 @@
 
     /* ===== TABBED VIEW SUPPORT ===== */
     /* Menyembunyikan section yang tidak aktif */
-    .section-view { display: none; padding-top: 140px; min-height: 100vh; }
-    #main-content { padding-bottom: 60px; }
+    .section-view { display: none; min-height: 100vh; padding: 0; }
+    .section-view.active-section { display: block; }
+    #hero.section-view { display: flex; padding-top: 40px; }
+    #main-content { padding-bottom: 60px; padding-top: 120px; }
   </style>
 </head>
 
@@ -454,7 +459,7 @@
 
 <main id="main-content">
 
-  <section id="hero" class="section-view !pt-20 flex items-center justify-center px-6 relative z-10" style="display: flex;">
+  <section id="hero" class="section-view flex items-center justify-center px-6 relative z-10" style="display: flex;">
     <div class="max-w-5xl text-center">
 
       <div class="badge fade-in mb-8">
@@ -879,7 +884,12 @@ function switchTab(sectionId) {
     const el = document.getElementById(id);
     if (el) {
       if (id === sectionId) {
-        el.style.display = (id === 'hero') ? 'flex' : 'block';
+        if (id === 'hero') {
+          el.style.display = 'flex';
+        } else {
+          el.style.display = 'block';
+        }
+        el.classList.add('active-section');
         
         // Trigger ulang animasi fade-in
         const animatedEls = el.querySelectorAll('.fade-in');
@@ -890,6 +900,7 @@ function switchTab(sectionId) {
         });
       } else {
         el.style.display = 'none';
+        el.classList.remove('active-section');
       }
     }
   });
